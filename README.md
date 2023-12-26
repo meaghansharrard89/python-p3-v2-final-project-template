@@ -21,3 +21,12 @@ Sort and conquer! Arrange your recipes by title to easily find the masterpiece y
 Fear not the culinary missteps! Exercise your chef's prerogative to delete recipes, ingredients, or categories with the swipe of a digital spatula.
 
 🎉 Let The Cookbook Chronicles be your culinary compass, steering you towards a symphony of taste that echoes with your kitchen prowess! Happy Cooking! 🌮🎶🔥
+
+<h1>Project Details</h1>
+<h2>Getting Started:</h2>
+To start this program, please follow the instructions below:
+
+1. Navigate to the folder that holds all program files.
+2. Type “pipenv install” and press enter to install necessary dependencies.
+3. Type “pipenv shell” and press enter to start the virtual environment.
+4. In your virtual environment, type “python lib/seed.py” and press enter to seed the database. Your terminal should now say “Database seeded”.
