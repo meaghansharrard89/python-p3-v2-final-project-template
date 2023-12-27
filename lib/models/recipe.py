@@ -77,6 +77,8 @@ class Recipe:
         ingredients_str = ", ".join(str(ingredient) for ingredient in self.ingredients)
 
         # Save the recipe details
+        category_name = self.category if self.category else None
+
         sql = "INSERT INTO recipes (title, ingredients, instructions, category) VALUES (?, ?, ?, ?)"
         CURSOR.execute(
             sql,
@@ -84,7 +86,7 @@ class Recipe:
                 self.title,
                 ingredients_str,
                 self.instructions,
-                self.category.name if self.category else None,
+                category_name,
             ),
         )
         CONN.commit()
@@ -101,11 +103,21 @@ class Recipe:
             recipe.title = row[1]
             recipe.ingredients = row[2]
             recipe.instructions = row[3]
-            recipe.category = row[4]
+            recipe.category = row[
+                4
+            ]  # Directly assign the category name from the database
 
         else:
-            recipe = cls(row[1], Category.find_by_id(row[2]), [])
+            # Split the ingredients string into a list
+            ingredients = (
+                [ingredient.strip() for ingredient in row[2].split(",")]
+                if row[2]
+                else []
+            )
+            category_name = row[4]
+            recipe = cls(row[1], row[3], ingredients, None)
             recipe._id = row[0]
+            recipe.category = category_name if category_name else None
             cls.all[recipe.id] = recipe
         return recipe
 
@@ -122,21 +134,23 @@ class Recipe:
         return cls.instance_from_db(row) if row else None
 
     # Add this method to associate an ingredient with a recipe
-    def associate_ingredient(self, ingredient):
-        self._ingredients.append(ingredient)
+    def associate_ingredient(self, ingredient, recipe_id):
+        self._ingredients = ingredient
+        ingredient.recipe_id = recipe_id
 
     # Add this method to add an ingredient by name
-    def add_ingredient(self, ingredient_name):
+    def add_ingredient(self, ingredient_name, recipe_id):
         ingredient = Ingredient.find_by_name(ingredient_name)
         if ingredient:
             print(f"Ingredient '{ingredient_name}' already exists.")
         else:
-            self.associate_ingredient(ingredient)
+            self.associate_ingredient(ingredient, recipe_id)
 
     # Add this method to associate a category with a recipe
 
-    def associate_category(self, category):
-        self._categories.append(category)
+    def associate_category(self, category, recipe_id):
+        self._category = category.name
+        category.recipe_id = recipe_id
 
     # Add this method to add a category by name
     def add_category(self, category_name):

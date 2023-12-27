@@ -23,7 +23,7 @@ class Category:
             self._name = value
         else:
             raise ValueError("Name must be a non-empty string")
-        
+
     @property
     def recipe_id(self):
         return self._recipe_id
@@ -87,6 +87,18 @@ class Category:
         sql = "SELECT * FROM categories WHERE id = ?"
         row = CURSOR.execute(sql, (category_id,)).fetchone()
         return cls.instance_from_db(row) if row else None
+
+    @classmethod
+    def find_recipe_id_by_name(cls, name):
+        # Find a category's recipe_id by its name
+        sql = """
+            SELECT recipe_id
+            FROM categories
+            WHERE name = ?
+        """
+        # Return the recipe_id
+        row = CURSOR.execute(sql, (name,)).fetchone()
+        return row[0] if row else None
 
     @classmethod
     def find_by_name(cls, name):

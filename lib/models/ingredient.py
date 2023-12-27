@@ -1,5 +1,6 @@
 from models.__init__ import CURSOR, CONN
 
+
 class Ingredient:
     all = {}
 
@@ -67,13 +68,18 @@ class Ingredient:
 
     @classmethod
     def instance_from_db(cls, row):
+        if row is None:
+            return None
+
         ingredient = cls.all.get(row[0])
         if ingredient:
-            ingredient.name = row[1]
+            ingredient.name = row[1] if len(row) > 1 else None
+            ingredient.recipe_id = row[2] if len(row) > 2 else None
         else:
-            ingredient = cls(row[1])
+            ingredient = cls(row[1] if len(row) > 1 else None)
+            ingredient.recipe_id = row[2] if len(row) > 2 else None
             ingredient._id = row[0]
-            cls.all[ingredient.id] = ingredient
+            cls.all[ingredient._id] = ingredient
         return ingredient
 
     @classmethod
@@ -99,3 +105,15 @@ class Ingredient:
         # Return the first table row of an Ingredient object matching a name
         row = CURSOR.execute(sql, (name,)).fetchone()
         return cls.instance_from_db(row) if row else None
+
+    @classmethod
+    def find_recipe_id_by_name(cls, name):
+        # Find an ingredient's recipe_id by its name
+        sql = """
+            SELECT recipe_id
+            FROM ingredients
+            WHERE name = ?
+        """
+        # Return the recipe_id
+        row = CURSOR.execute(sql, (name,)).fetchone()
+        return row[0] if row else None

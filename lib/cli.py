@@ -71,12 +71,12 @@ def menu():
     print("6. Add a new ingredient")
     print("7. Delete an ingredient")
     print("8. Display all ingredients")
-    print("9. Find an ingredient by name")
+    print("9. Find a recipe by the ingredient name")
     print("10. Find an ingredient by ID")
     print("11. Add a new category")
     print("12. Delete a category")
     print("13. Display all categories")
-    print("14. Find a category by name")
+    print("14. Find a recipe by the category name")
     print("15. Find a category by ID")
 
 

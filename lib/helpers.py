@@ -28,11 +28,13 @@ def create_category():
         recipe = Recipe.find_by_id(recipe_id)
 
         if recipe:
-            category = Category(name, recipe_id)
-            category.save()
-            recipe.associate_category(ingredient)
+            category = Category(name)
+            recipe.associate_category(
+                category, recipe_id
+            )  # Pass recipe_id to associate_category
+            category.save()  # Save the category to ensure the correct recipe_id is stored
             print(
-                f"Category '{name}' created and associated with recipe '{recipe.name}'."
+                f"Category '{name}' created and associated with recipe '{recipe.title}'."
             )
         else:
             print(f"Recipe with ID {recipe_id} not found.")
@@ -65,8 +67,8 @@ def display_all_categories():
 
 def category_by_name():
     name = input("Enter the category name: ")
-    category = Category.find_by_name(name)
-    print(category) if category else print(f"Category {name} not found")
+    category = Category.find_recipe_id_by_name(name)
+    print(category) if category else print(f"Recipe ID {name} not found")
 
 
 def category_by_id():
@@ -97,11 +99,13 @@ def create_ingredient():
         recipe = Recipe.find_by_id(recipe_id)
 
         if recipe:
-            ingredient = Ingredient(name, recipe_id)
-            ingredient.save()
-            recipe.associate_ingredient(ingredient)
+            ingredient = Ingredient(name)
+            recipe.associate_ingredient(
+                ingredient, recipe_id
+            )  # Pass recipe_id to associate_ingredient
+            ingredient.save()  # Save the ingredient to ensure the correct recipe_id is stored
             print(
-                f"Ingredient '{name}' created and associated with recipe '{recipe.name}'."
+                f"Ingredient '{name}' created and associated with recipe '{recipe.title}'."
             )
         else:
             print(f"Recipe with ID {recipe_id} not found.")
@@ -134,8 +138,8 @@ def display_all_ingredients():
 
 def ingredient_by_name():
     name = input("Enter the ingredient's name: ")
-    ingredient = Ingredient.find_by_name(name)
-    print(ingredient) if ingredient else print(f"Ingredient {name} not found")
+    ingredient = Ingredient.find_recipe_id_by_name(name)
+    print(ingredient) if ingredient else print(f"Recipe ID for {name} not found")
 
 
 def ingredient_by_id():
@@ -153,12 +157,9 @@ def create_recipe():
     title = input("Enter the title of the recipe: ")
 
     # Allow the user to add ingredients
-    ingredients = []
-    while True:
-        ingredient_name = input("Enter an ingredient name (leave blank to finish): ")
-        if not ingredient_name:
-            break
-        ingredients.append(ingredient_name)
+    ingredients = input(
+        "Enter the ingredients for the recipe (comma-separated): "
+    ).split(",")
 
     instructions = input("Enter the instructions for the recipe: ")
 
@@ -170,17 +171,7 @@ def create_recipe():
     category_name = input("Enter the category for the recipe: ")
 
     # Create a new recipe instance
-    recipe = Recipe(title, instructions)
-
-    # Add ingredients to the recipe
-    for ingredient_name in ingredients:
-        recipe.add_ingredient(ingredient_name)
-
-    # Create a new category instance
-    category = Category(category_name)
-
-    # Set the category for the recipe
-    recipe.category = category
+    recipe = Recipe(title, instructions, ingredients, category_name)
 
     # Save the recipe
     recipe.save()
