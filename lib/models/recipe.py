@@ -6,24 +6,23 @@ from models.category import Category
 class Recipe:
     all = {}
 
-    def __init__(self, title, instructions, ingredients=None, id=None):
+    def __init__(self, title, instructions, ingredients, category, id=None):
         self._id = id
         self._title = title
         self._instructions = instructions
-        self._ingredients = (
-            ingredients or []
-        )  # Use an empty list if ingredients is None
+        self._ingredients = ingredients
+        self._category = category
 
     @property
     def id(self):
         return self._id
 
     @property
-    def name(self):  # Updated property name
+    def title(self):  # Updated property title
         return self._title
 
-    @name.setter
-    def name(self, value):
+    @title.setter
+    def title(self, value):
         if isinstance(value, str) and len(value):
             self._title = value
         else:
@@ -45,14 +44,23 @@ class Recipe:
     def ingredients(self, value):
         self._ingredients = value
 
+    @property
+    def instructions(self):
+        return self._instructions
+
+    @instructions.setter
+    def instructions(self, value):
+        self._instructions = value
+
     @classmethod
     def create_table(cls):
         sql = """
             CREATE TABLE IF NOT EXISTS recipes (
                 id INTEGER PRIMARY KEY,
-                name TEXT NOT NULL,
-                category_id INTEGER,
-                FOREIGN KEY (category_id) REFERENCES categories(id)
+                title TEXT NOT NULL,
+                ingredients TEXT NOT NULL,
+                instructions TEXT NOT NULL,
+                category TEXT
             )
         """
         CURSOR.execute(sql)
@@ -65,14 +73,20 @@ class Recipe:
         CONN.commit()
 
     def save(self):
-        sql = "INSERT INTO recipes (name, category_id) VALUES (?, ?)"
-        CURSOR.execute(sql, (self.name, self.category.id))
-        recipe_id = CURSOR.lastrowid
+        # Convert the list of ingredients to a comma-separated string
+        ingredients_str = ", ".join(str(ingredient) for ingredient in self.ingredients)
 
-        for ingredient in self.ingredients:
-            sql = "INSERT INTO recipe_ingredients (recipe_id, ingredient_id) VALUES (?, ?)"
-            CURSOR.execute(sql, (recipe_id, ingredient.id))
-
+        # Save the recipe details
+        sql = "INSERT INTO recipes (title, ingredients, instructions, category) VALUES (?, ?, ?, ?)"
+        CURSOR.execute(
+            sql,
+            (
+                self.title,
+                ingredients_str,
+                self.instructions,
+                self.category.name if self.category else None,
+            ),
+        )
         CONN.commit()
 
     def delete(self):
@@ -84,10 +98,11 @@ class Recipe:
     def instance_from_db(cls, row):
         recipe = cls.all.get(row[0])
         if recipe:
-            recipe.name = row[1]
-            recipe.category = Category.find_by_id(
-                row[2]
-            )  # Assuming Category class has a find_by_id method
+            recipe.title = row[1]
+            recipe.ingredients = row[2]
+            recipe.instructions = row[3]
+            recipe.category = row[4]
+
         else:
             recipe = cls(row[1], Category.find_by_id(row[2]), [])
             recipe._id = row[0]
@@ -114,9 +129,22 @@ class Recipe:
     def add_ingredient(self, ingredient_name):
         ingredient = Ingredient.find_by_name(ingredient_name)
         if ingredient:
-            self.associate_ingredient(ingredient)
+            print(f"Ingredient '{ingredient_name}' already exists.")
         else:
-            print(f"Ingredient '{ingredient_name}' not found.")
+            self.associate_ingredient(ingredient)
+
+    # Add this method to associate a category with a recipe
+
+    def associate_category(self, category):
+        self._categories.append(category)
+
+    # Add this method to add a category by name
+    def add_category(self, category_name):
+        category = Category.find_by_name(category_name)
+        if category:
+            print(f"Category '{category_name}' already exists.")
+        else:
+            self.associate_category(category)
 
     @classmethod
     def find_by_title(cls, title):

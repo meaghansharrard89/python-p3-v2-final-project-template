@@ -36,9 +36,11 @@ class Ingredient:
         sql = """
             CREATE TABLE IF NOT EXISTS ingredients (
                 id INTEGER PRIMARY KEY,
-                name TEXT NOT NULL
-            )
-        """
+                name TEXT NOT NULL,
+                recipe_id INTEGER,
+                FOREIGN KEY (recipe_id) REFERENCES recipes(id)
+                )
+            """
         CURSOR.execute(sql)
         CONN.commit()
 

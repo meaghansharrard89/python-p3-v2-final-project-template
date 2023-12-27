@@ -4,9 +4,10 @@ from models.__init__ import CURSOR, CONN
 class Category:
     all = {}
 
-    def __init__(self, name, id=None):
+    def __init__(self, name, recipe_id=None, id=None):
         self._id = id
         self._name = name
+        self._recipe_id = recipe_id
 
     @property
     def id(self):
@@ -22,13 +23,23 @@ class Category:
             self._name = value
         else:
             raise ValueError("Name must be a non-empty string")
+        
+    @property
+    def recipe_id(self):
+        return self._recipe_id
+
+    @recipe_id.setter
+    def recipe_id(self, value):
+        self._recipe_id = value
 
     @classmethod
     def create_table(cls):
         sql = """
             CREATE TABLE IF NOT EXISTS categories (
                 id INTEGER PRIMARY KEY,
-                name TEXT NOT NULL
+                name TEXT NOT NULL,
+                recipe_id INTEGER,
+                FOREIGN KEY (recipe_id) REFERENCES recipes(id)
             )
         """
         CURSOR.execute(sql)
@@ -41,8 +52,12 @@ class Category:
         CONN.commit()
 
     def save(self):
-        sql = "INSERT INTO categories (name) VALUES (?)"
-        CURSOR.execute(sql, (self.name,))
+        sql = """
+            INSERT INTO categories (name, recipe_id)
+            VALUES (?, ?)
+        """
+        # Use the recipe_id attribute directly in the execute call
+        CURSOR.execute(sql, (self.name, self.recipe_id))
         CONN.commit()
 
     def delete(self):
