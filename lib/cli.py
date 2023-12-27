@@ -21,11 +21,11 @@ def main():
         if choice == "0":
             exit_program()
         elif choice == "1":
-            create_category()
+            create_recipe()
         elif choice == "2":
-            delete_category()
+            delete_recipe()
         elif choice == "3":
-            display_all_categories()
+            display_all_recipes()
         elif choice == "4":
             create_ingredient()
         elif choice == "5":
@@ -33,11 +33,11 @@ def main():
         elif choice == "6":
             display_all_ingredients()
         elif choice == "7":
-            create_recipe()
+            create_category()
         elif choice == "8":
-            delete_recipe()
+            delete_category()
         elif choice == "9":
-            display_all_recipes()
+            display_all_categories()
         else:
             print("Invalid choice")
 
@@ -45,15 +45,15 @@ def main():
 def menu():
     print("Please select an option:")
     print("0. Exit the program")
-    print("1. Create a category")
-    print("2. Delete a category")
-    print("3. Display all categories")
-    print("4. Create ingredient")
+    print("1. Create a new recipe")
+    print("2. Delete a recipe")
+    print("3. Display all recipes")
+    print("4. Add a new ingredient")
     print("5. Delete an ingredient")
     print("6. Display all ingredients")
-    print("7. Create a recipe")
-    print("8. Delete a recipe")
-    print("9. Display all recipes")
+    print("7. Add a new category")
+    print("8. Delete a category")
+    print("9. Display all categories")
 
 
 if __name__ == "__main__":

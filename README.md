@@ -29,4 +29,4 @@ To start this program, please follow the instructions below:
 1. Navigate to the folder that holds all program files.
 2. Type “pipenv install” and press enter to install necessary dependencies.
 3. Type “pipenv shell” and press enter to start the virtual environment.
-4. In your virtual environment, type “python lib/seed.py” and press enter to seed the database. Your terminal should now say “Database seeded”.
+4.
