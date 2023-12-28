@@ -61,8 +61,8 @@ def main():
 
 
 def menu():
-    print("Please select an option:")
-    print("0. Exit the program")
+    print("Start cookin', chef!")
+    print("0. Kitchen's closed")
     print("1. Create a new recipe")
     print("2. Delete a recipe")
     print("3. Display all recipes")
@@ -71,12 +71,12 @@ def menu():
     print("6. Add a new ingredient")
     print("7. Delete an ingredient")
     print("8. Display all ingredients")
-    print("9. Find a recipe by the ingredient name")
+    print("9. Find recipe(s) by the ingredient name")
     print("10. Find an ingredient by ID")
     print("11. Add a new category")
     print("12. Delete a category")
     print("13. Display all categories")
-    print("14. Find a recipe by the category name")
+    print("14. Find recipe(s) by the category name")
     print("15. Find a category by ID")
 
 

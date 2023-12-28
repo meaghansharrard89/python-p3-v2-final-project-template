@@ -7,7 +7,7 @@ class Category:
     def __init__(self, name, recipe_id=None, id=None):
         self._id = id
         self._name = name
-        self._recipe_id = recipe_id
+        self._recipe_id = recipe_id or []
 
     @property
     def id(self):
@@ -57,7 +57,7 @@ class Category:
             VALUES (?, ?)
         """
         # Use the recipe_id attribute directly in the execute call
-        CURSOR.execute(sql, (self.name, self.recipe_id))
+        CURSOR.execute(sql, (self.name, ",".join(map(str, self.recipe_id))))
         CONN.commit()
 
     def delete(self):

@@ -133,10 +133,22 @@ class Recipe:
         row = CURSOR.execute(sql, (recipe_id,)).fetchone()
         return cls.instance_from_db(row) if row else None
 
-    # Add this method to associate an ingredient with a recipe
-    def associate_ingredient(self, ingredient, recipe_id):
-        self._ingredients = ingredient
-        ingredient.recipe_id = recipe_id
+    def associate_ingredient(self, ingredient, recipe_ids):
+        if not hasattr(self, "_ingredients"):
+            self._ingredients = ""
+
+        ingredient_name = ingredient.name
+        if ingredient_name not in self._ingredients:
+            if self._ingredients:
+                self._ingredients += ", "
+            self._ingredients += ingredient_name
+
+        # Ensure recipe_ids is a list
+        if not isinstance(recipe_ids, list):
+            recipe_ids = [recipe_ids]
+
+        # Update the ingredient's recipe_ids attribute
+        ingredient.recipe_id.extend(recipe_ids)
 
     # Add this method to add an ingredient by name
     def add_ingredient(self, ingredient_name, recipe_id):
@@ -147,10 +159,20 @@ class Recipe:
             self.associate_ingredient(ingredient, recipe_id)
 
     # Add this method to associate a category with a recipe
+    def associate_category(self, category, recipe_ids):
+        if not hasattr(self, "_categories"):
+            self._categories = []
 
-    def associate_category(self, category, recipe_id):
-        self._category = category.name
-        category.recipe_id = recipe_id
+        category_name = category.name
+        if category_name not in self._categories:
+            self._categories.append(category_name)
+
+        # Ensure recipe_ids is a list
+        if not isinstance(recipe_ids, list):
+            recipe_ids = [recipe_ids]
+
+        # Update the category's recipe_ids attribute
+        category.recipe_id.extend(recipe_ids)
 
     # Add this method to add a category by name
     def add_category(self, category_name):
