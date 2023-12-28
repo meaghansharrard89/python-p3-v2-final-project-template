@@ -66,6 +66,24 @@ class Ingredient:
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
 
+    def update(self):
+        sql = """
+            UPDATE ingredients
+            SET name = ?
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.name, self.id))
+        CONN.commit()
+
+    def update_recipe_ids(self):
+        sql = """
+            UPDATE ingredients 
+            SET recipe_id = ? 
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (",".join(map(str, self.recipe_id)), self.id))
+        CONN.commit()
+
     @classmethod
     def instance_from_db(cls, row):
         if row is None:

@@ -65,6 +65,24 @@ class Category:
         CURSOR.execute(sql, (self.id,))
         CONN.commit()
 
+    def update(self):
+        sql = """
+            UPDATE categories
+            SET name = ?
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (self.name, self.id))
+        CONN.commit()
+
+    def update_recipe_ids(self):
+        sql = """
+            UPDATE categories 
+            SET recipe_id = ? 
+            WHERE id = ?
+        """
+        CURSOR.execute(sql, (",".join(map(str, self.recipe_id)), self.id))
+        CONN.commit()
+
     @classmethod
     def instance_from_db(cls, row):
         category = cls.all.get(row[0])

@@ -114,6 +114,42 @@ def category_by_id():
     print(category.name) if category else print(f"Category {id_} not found")
 
 
+def update_category():
+    id_ = input("Enter the category id: ")
+    if category := Category.find_by_id(id_):
+        try:
+            name = input("Enter the new category name: ")
+            category.name = name
+
+            recipe_ids_input = input("Enter the new recipe ID(s): ")
+            recipe_ids = (
+                [int(id_.strip()) for id_ in recipe_ids_input.split(",")]
+                if recipe_ids_input
+                else []
+            )
+
+            # Save the recipe IDs before updating the category
+            category.recipe_id = recipe_ids
+            category.update_recipe_ids()
+            category.update()
+
+            # Print success message with category name and recipe titles
+            print(f"Category successfully updated!\nCategory: {category.name}")
+
+            if recipe_ids:
+                for recipe_id in recipe_ids:
+                    recipe = Recipe.find_by_id(recipe_id)
+                    if recipe:
+                        print(f"Recipe Title: {recipe.title}")
+                    else:
+                        print(f"Recipe with ID {recipe_id} not found")
+
+        except Exception as exc:
+            print("Error updating category:", exc)
+    else:
+        print(f"Category {id_} not found")
+
+
 # Ingredient:
 
 
@@ -219,6 +255,42 @@ def ingredient_by_id():
     id_ = input("Enter the ingredient's id: ")
     ingredient = Ingredient.find_by_id(id_)
     print(ingredient.name) if ingredient else print(f"Ingredient {id_} not found")
+
+
+def update_ingredient():
+    id_ = input("Enter the ingredient id: ")
+    if ingredient := Ingredient.find_by_id(id_):
+        try:
+            name = input("Enter the new ingredient name: ")
+            ingredient.name = name
+
+            recipe_ids_input = input("Enter the new recipe ID(s): ")
+            recipe_ids = (
+                [int(id_.strip()) for id_ in recipe_ids_input.split(",")]
+                if recipe_ids_input
+                else []
+            )
+
+            # Save the recipe IDs before updating the ingredient
+            ingredient.recipe_id = recipe_ids
+            ingredient.update_recipe_ids()
+            ingredient.update()
+
+            # Print success message with ingredient name and recipe titles (if any)
+            print(f"Ingredient successfully updated!\nIngredient: {ingredient.name}")
+
+            if recipe_ids:
+                for recipe_id in recipe_ids:
+                    recipe = Recipe.find_by_id(recipe_id)
+                    if recipe:
+                        print(f"Recipe Title: {recipe.title}")
+                    else:
+                        print(f"Recipe with ID {recipe_id} not found")
+
+        except Exception as exc:
+            print("Error updating ingredient:", exc)
+    else:
+        print(f"Ingredient {id_} not found")
 
 
 # Recipe:
