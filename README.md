@@ -35,23 +35,23 @@ Explore the program through these different menu options:
 
 <ul>
     <li><b>0- Kitchen's closed:</b> closes the menu and brings users back to the program files.</li>
-    <li>1- <b>Create a new recipe:</b> enter the title, ingredients, instructions, and category to create a new recipe.</li>
-    <li>2- Delete a recipe: enter the title of the recipe to delete.</li>
-    <li>3- Display all recipes: displays all recipes and associated information.</li>
-    <li>4- Find a recipe by title: returns the recipe object after searching by recipe title.</li>
-    <li>5- Find a recipe by ID: returns the recipe title after searching by recipe ID.</li>
-    <li>6- Add a new ingredient: add a new ingredient by entering the name and recipe ID(s) the ingredient is associated with (recipe ID is optional).</li>
-    <li>7- Delete an ingredient: enter the name of the ingredient to delete.</li>
-    <li>8- Display all ingredients: displays all ingredients.</li>
-    <li>9- Find recipe(s) by the ingredient name: display the associated recipe title(s) by searching for an ingredient name.</li>
-    <li>10- Find an ingredient by ID: returns the ingredient name after searching by ingredient ID.</li>
-    <li>11- Update an existing ingredient: update an ingredient's name and/or recipe ID(s).</li>
-    <li>12- Add a new category: add a new category by entering the name and recipe ID(s) the category is associated with (recipe ID is optional).</li>
-    <li>13- Delete a category: enter the name of the category to delete.</li>
-    <li>14- Display all categories: displays all categories.</li>
-    <li>15- Find recipe(s) by the category name: display the associated recipe title(s) by searching for a category name.</li>
-    <li>16- Find a category by ID: returns the category name after searching by category ID.</li>
-    <li>17- Update an existing category: update a category's name and/or recipe ID(s).</li>
+    <li><b>1- Create a new recipe:</b> enter the title, ingredients, instructions, and category to create a new recipe.</li>
+    <li><b>2- Delete a recipe:</b> enter the title of the recipe to delete.</li>
+    <li><b>3- Display all recipes:</b> displays all recipes and associated information.</li>
+    <li><b>4- Find a recipe by title:</b> returns the recipe object after searching by recipe title.</li>
+    <li><b>5- Find a recipe by ID:</b> returns the recipe title after searching by recipe ID.</li>
+    <li><b>6- Add a new ingredient:</b> add a new ingredient by entering the name and recipe ID(s) the ingredient is associated with (recipe ID is optional).</li>
+    <li><b>7- Delete an ingredient:</b> enter the name of the ingredient to delete.</li>
+    <li><b>8- Display all ingredients:</b> displays all ingredients.</li>
+    <li><b>9- Find recipe(s) by the ingredient name:</b> display the associated recipe title(s) by searching for an ingredient name.</li>
+    <li><b>10- Find an ingredient by ID:</b> returns the ingredient name after searching by ingredient ID.</li>
+    <li><b>11- Update an existing ingredient:</b> update an ingredient's name and/or recipe ID(s).</li>
+    <li><b>12- Add a new category:</b> add a new category by entering the name and recipe ID(s) the category is associated with (recipe ID is optional).</li>
+    <li><b>13- Delete a category:</b> enter the name of the category to delete.</li>
+    <li><b>14- Display all categories:</b> displays all categories.</li>
+    <li><b>15- Find recipe(s) by the category name:</b> display the associated recipe title(s) by searching for a category name.</li>
+    <li><b>16- Find a category by ID:</b> returns the category name after searching by category ID.</li>
+    <li><b>17- Update an existing category:</b> update a category's name and/or recipe ID(s).</li>
 </ul>
 
 <h2>Program Information</h2>
