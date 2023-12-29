@@ -54,17 +54,18 @@ Explore the program through these different menu options:
 
 <h2>Program Information</h2>
 
+```console
 .
 └── lib
-├── models
-├── init.py
-├── category.py
-│ └── ingredient.py
-├── recipe.py
-├── cli.py
-├── debug.py
-├── helpers.py
+    ├── models
+        ├── __init__.py
+        ├── category.py
+        └── ingredient.py
+        ├── recipe.py
+    ├── cli.py
+    ├── debug.py
+    ├── helpers.py
 ├── Pipfile
 ├── Pipfile.lock
-├── pytest.ini
 ├── README.md
+```
