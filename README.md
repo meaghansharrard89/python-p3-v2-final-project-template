@@ -33,6 +33,7 @@ To start this program, please follow the instructions below:
 
 Explore the program through these different menu options:
 
+<li>
 0- Kitchen's closed: closes the menu and brings users back to the program files.
 1- Create a new recipe: enter the title, ingredients, instructions, and category to create a new recipe.
 2- Delete a recipe: enter the title of the recipe to delete.
@@ -51,11 +52,11 @@ Explore the program through these different menu options:
 15- Find recipe(s) by the category name: display the associated recipe title(s) by searching for a category name.
 16- Find a category by ID: returns the category name after searching by category ID.
 17- Update an existing category: update a category's name and/or recipe ID(s).
-
+</li>
 <h2>Program Information</h2>
 
 ```console
-.
+
 └── lib
     ├── models
         ├── __init__.py
@@ -69,3 +70,21 @@ Explore the program through these different menu options:
 ├── Pipfile.lock
 ├── README.md
 ```
+
+<h3>category.py</h3>
+
+Category contains an ID column, category name column (breakfast, lunch, etc) and a recipe ID column, which is connected to recipes in recipe.py.
+
+<h3>ingredient.py</h3>
+
+Ingredient contains an ID column, ingredient name column (salt, butter, etc) and a recipe ID column, which is connected to recipes in recipe.py.
+
+<h3>recipes.py</h3>
+
+Recipe contains five columns: id, title, ingredients, instructions, and category.
+
+<h3>cli.py</h3>
+Imports functions from helper.py and organizes them in a way that matches what the user sees in their terminal.
+
+<h3>helpers.py</h3>
+These functions allow the user to interact with the database with the help of functions imported from category.py, recipe.py, and ingredient.py.
