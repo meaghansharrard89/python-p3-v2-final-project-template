@@ -34,8 +34,8 @@ To start this program, please follow the instructions below:
 Explore the program through these different menu options:
 
 <ul>
-    <li>0- Kitchen's closed: closes the menu and brings users back to the program files.</li>
-    <li>1- Create a new recipe: enter the title, ingredients, instructions, and category to create a new recipe.</li>
+    <li><b>0- Kitchen's closed:</b> closes the menu and brings users back to the program files.</li>
+    <li>1- <b>Create a new recipe:</b> enter the title, ingredients, instructions, and category to create a new recipe.</li>
     <li>2- Delete a recipe: enter the title of the recipe to delete.</li>
     <li>3- Display all recipes: displays all recipes and associated information.</li>
     <li>4- Find a recipe by title: returns the recipe object after searching by recipe title.</li>
@@ -74,18 +74,20 @@ Explore the program through these different menu options:
 
 <h3>category.py</h3>
 
-Category contains an ID column, category name column (breakfast, lunch, etc) and a recipe ID column, which is connected to recipes in recipe.py.
+Category contains an ID column, category name column (breakfast, lunch, etc.) and a recipe ID column, which is connected to recipes in recipe.py.
 
 <h3>ingredient.py</h3>
 
-Ingredient contains an ID column, ingredient name column (salt, butter, etc) and a recipe ID column, which is connected to recipes in recipe.py.
+Ingredient contains an ID column, ingredient name column (salt, butter, etc.) and a recipe ID column, which is connected to recipes in recipe.py.
 
 <h3>recipes.py</h3>
 
-Recipe contains five columns: id, title, ingredients, instructions, and category.
+Recipe contains five columns: ID, title, ingredients, instructions, and category.
 
 <h3>cli.py</h3>
+
 Imports functions from helper.py and organizes them in a way that matches what the user sees in their terminal.
 
 <h3>helpers.py</h3>
+
 These functions allow the user to interact with the database with the help of functions imported from category.py, recipe.py, and ingredient.py.
