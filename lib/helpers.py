@@ -13,7 +13,7 @@ Recipe.create_table()
 def create_category():
     name = input("Enter the name of the category: ")
 
-    # Prompt user for recipe_ids if they are associated with recipes
+    # Prompt user for recipe IDs if they are associated with the category
     recipe_id_input = input(
         "Enter the IDs of the recipes to associate with (comma-separated, leave blank for none): "
     )
@@ -53,7 +53,6 @@ def create_category():
                 "No valid recipes found. Category will be created without associations."
             )
     else:
-        # If not associated with any recipes, create the category without recipe_ids
         category = Category(name)
         category.save()
         print(f"Category '{name}' created successfully.")
@@ -80,23 +79,20 @@ def display_all_categories():
 
 
 def category_by_name():
+    # Find the recipe IDs associated with the category name
     name = input("Enter the category name: ")
-
-    # Find the recipe_ids associated with the category
     recipe_ids = Category.find_recipe_id_by_name(name)
 
     if recipe_ids is not None:
         if isinstance(recipe_ids, int):
-            # If there's only one recipe_id, convert it to a list
+            # If there's only one recipe ID, convert it to a list
             recipe_ids_list = [recipe_ids]
         else:
-            # If there are multiple recipe_ids, split the string into a list
+            # If there are multiple recipe IDs, split the string into a list
             recipe_ids_list = [int(id.strip()) for id in recipe_ids.split(",")]
 
-        # Print the category name
         print(f"Category: {name}")
 
-        # Print the titles of associated recipes
         for recipe_id in recipe_ids_list:
             recipe = Recipe.find_by_id(recipe_id)
             if recipe:
@@ -108,13 +104,14 @@ def category_by_name():
 
 
 def category_by_id():
-    # use a trailing underscore not to override the built-in id function
+    # Find the category by ID
     id_ = input("Enter the category's id: ")
     category = Category.find_by_id(id_)
     print(category.name) if category else print(f"Category {id_} not found")
 
 
 def update_category():
+    # Update the category
     id_ = input("Enter the category id: ")
     if category := Category.find_by_id(id_):
         try:
@@ -133,7 +130,6 @@ def update_category():
             category.update_recipe_ids()
             category.update()
 
-            # Print success message with category name and recipe titles
             print(f"Category successfully updated!\nCategory: {category.name}")
 
             if recipe_ids:
@@ -155,8 +151,6 @@ def update_category():
 
 def create_ingredient():
     name = input("Enter the name of the ingredient: ")
-
-    # Prompt user for recipe_ids if they are associated with recipes
     recipe_id_input = input(
         "Enter the IDs of the recipes to associate with (comma-separated, leave blank for none): "
     )
@@ -180,8 +174,6 @@ def create_ingredient():
             for valid_recipe_id in valid_recipe_ids:
                 recipe = Recipe.find_by_id(valid_recipe_id)
                 recipe.associate_ingredient(ingredient, valid_recipe_id)
-
-            # Save the ingredient after associating it with recipes
             ingredient.save()
 
             # Use the valid_recipe_ids directly, not recipe_id
@@ -196,7 +188,7 @@ def create_ingredient():
                 "No valid recipes found. Ingredient will be created without associations."
             )
     else:
-        # If not associated with any recipes, create the ingredient without recipe_ids
+        # If not associated with any recipes, create the ingredient without recipe IDs
         ingredient = Ingredient(name)
         ingredient.save()
         print(f"Ingredient '{name}' created successfully.")
@@ -223,23 +215,18 @@ def display_all_ingredients():
 
 
 def ingredient_by_name():
+    # Find the recipe ID(s) associated with the ingredient name
     name = input("Enter the ingredient's name: ")
-
-    # Find the recipe_ids associated with the ingredient
     recipe_ids = Ingredient.find_recipe_id_by_name(name)
-
     if recipe_ids is not None:
         if isinstance(recipe_ids, int):
-            # If there's only one recipe_id, convert it to a list
+            # If there's only one recipe ID, convert it to a list
             recipe_ids_list = [recipe_ids]
         else:
-            # If there are multiple recipe_ids, split the string into a list
+            # If there are multiple recipe IDs, split the string into a list
             recipe_ids_list = [int(id.strip()) for id in recipe_ids.split(",")]
-
-        # Print the ingredient's name
         print(f"Ingredient: {name}")
 
-        # Print the titles of associated recipes
         for recipe_id in recipe_ids_list:
             recipe = Recipe.find_by_id(recipe_id)
             if recipe:
@@ -251,13 +238,14 @@ def ingredient_by_name():
 
 
 def ingredient_by_id():
-    # use a trailing underscore not to override the built-in id function
+    # Find ingredient by ID
     id_ = input("Enter the ingredient's id: ")
     ingredient = Ingredient.find_by_id(id_)
     print(ingredient.name) if ingredient else print(f"Ingredient {id_} not found")
 
 
 def update_ingredient():
+    # Update ingredient
     id_ = input("Enter the ingredient id: ")
     if ingredient := Ingredient.find_by_id(id_):
         try:
@@ -276,7 +264,6 @@ def update_ingredient():
             ingredient.update_recipe_ids()
             ingredient.update()
 
-            # Print success message with ingredient name and recipe titles (if any)
             print(f"Ingredient successfully updated!\nIngredient: {ingredient.name}")
 
             if recipe_ids:
@@ -293,33 +280,52 @@ def update_ingredient():
         print(f"Ingredient {id_} not found")
 
 
+# IN PROGRESS
+def ingredient_by_recipe_id():
+    recipe_id = input("Enter the recipe ID: ")
+
+    # Find the ingredient names associated with the recipe ID
+    ingredient_names = Ingredient.find_recipe_id_by_name(recipe_id)
+
+    if ingredient_names is not None:
+        if isinstance(ingredient_names, str):
+            # If there's only one ingredient name, convert it to a list
+            ingredient_names_list = [ingredient_names]
+        else:
+            # If there are multiple ingredient names, split the string into a list
+            ingredient_names_list = [
+                name.strip() for name in ingredient_names.split(",")
+            ]
+
+        # Print the recipe's ID
+        print(f"Recipe ID: {recipe_id}")
+
+        # Print the names of associated ingredients
+        for ingredient_name in ingredient_names_list:
+            ingredient = Ingredient.find_by_name(ingredient_name)
+            if ingredient:
+                print(f"  Ingredient Name: {ingredient_name}")
+            else:
+                print(f"  Ingredient with name {ingredient_name} not found")
+    else:
+        print(f"No ingredients found for the recipe with ID {recipe_id}")
+
+
 # Recipe:
 
 
 def create_recipe():
-    # Prompt user for recipe details
     title = input("Enter the title of the recipe: ")
-
-    # Allow the user to add ingredients
     ingredients = input(
         "Enter the ingredients for the recipe (comma-separated): "
     ).split(",")
-
     instructions = input("Enter the instructions for the recipe: ")
-
     if not instructions.strip():
         print("Instructions must be a non-empty string.")
         return
-
-    # Prompt user for category
     category_name = input("Enter the category for the recipe: ")
-
-    # Create a new recipe instance
     recipe = Recipe(title, instructions, ingredients, category_name)
-
-    # Save the recipe
     recipe.save()
-
     print(
         f"Recipe '{title}' created successfully with ingredients, instructions, and category '{category_name}'!"
     )
@@ -349,13 +355,14 @@ def display_all_recipes():
 
 
 def recipe_by_title():
+    # Find recipe by title
     name = input("Enter the recipe's title: ")
     recipe = Recipe.find_by_title(name)
     print(recipe) if recipe else print(f"Recipe {name} not found")
 
 
 def recipe_by_id():
-    # use a trailing underscore not to override the built-in id function
+    # Find recipe by ID
     id_ = input("Enter the recipe's id: ")
     recipe = Recipe.find_by_id(id_)
     print(recipe.title) if recipe else print(f"Recipe {id_} not found")

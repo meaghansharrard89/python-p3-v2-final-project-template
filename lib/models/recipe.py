@@ -18,13 +18,13 @@ class Recipe:
         return self._id
 
     @property
-    def title(self):  # Updated property title
+    def title(self):
         return self._title
 
     @title.setter
-    def title(self, value):
-        if isinstance(value, str) and len(value):
-            self._title = value
+    def title(self, title):
+        if isinstance(title, str) and len(title):
+            self._title = title
         else:
             raise ValueError("Name must be a non-empty string")
 
@@ -33,24 +33,24 @@ class Recipe:
         return self._category
 
     @category.setter
-    def category(self, value):
-        self._category = value
+    def category(self, category):
+        self._category = category
 
     @property
     def ingredients(self):
         return self._ingredients
 
     @ingredients.setter
-    def ingredients(self, value):
-        self._ingredients = value
+    def ingredients(self, ingredients):
+        self._ingredients = ingredients
 
     @property
     def instructions(self):
         return self._instructions
 
     @instructions.setter
-    def instructions(self, value):
-        self._instructions = value
+    def instructions(self, instructions):
+        self._instructions = instructions
 
     @classmethod
     def create_table(cls):
@@ -75,10 +75,7 @@ class Recipe:
     def save(self):
         # Convert the list of ingredients to a comma-separated string
         ingredients_str = ", ".join(str(ingredient) for ingredient in self.ingredients)
-
-        # Save the recipe details
         category_name = self.category if self.category else None
-
         sql = "INSERT INTO recipes (title, ingredients, instructions, category) VALUES (?, ?, ?, ?)"
         CURSOR.execute(
             sql,
@@ -133,6 +130,14 @@ class Recipe:
         row = CURSOR.execute(sql, (recipe_id,)).fetchone()
         return cls.instance_from_db(row) if row else None
 
+    # Associates the new ingredient with the recipe
+    def add_ingredient(self, ingredient_name, recipe_id):
+        ingredient = Ingredient.find_by_name(ingredient_name)
+        if ingredient:
+            print(f"Ingredient '{ingredient_name}' already exists.")
+        else:
+            self.associate_ingredient(ingredient, recipe_id)
+
     def associate_ingredient(self, ingredient, recipe_ids):
         if not hasattr(self, "_ingredients"):
             self._ingredients = ""
@@ -150,15 +155,14 @@ class Recipe:
         # Update the ingredient's recipe_ids attribute
         ingredient.recipe_id.extend(recipe_ids)
 
-    # Add this method to add an ingredient by name
-    def add_ingredient(self, ingredient_name, recipe_id):
-        ingredient = Ingredient.find_by_name(ingredient_name)
-        if ingredient:
-            print(f"Ingredient '{ingredient_name}' already exists.")
+    # Associates the new category with the recipe
+    def add_category(self, category_name):
+        category = Category.find_by_name(category_name)
+        if category:
+            print(f"Category '{category_name}' already exists.")
         else:
-            self.associate_ingredient(ingredient, recipe_id)
+            self.associate_category(category)
 
-    # Add this method to associate a category with a recipe
     def associate_category(self, category, recipe_ids):
         if not hasattr(self, "_categories"):
             self._categories = []
@@ -173,14 +177,6 @@ class Recipe:
 
         # Update the category's recipe_ids attribute
         category.recipe_id.extend(recipe_ids)
-
-    # Add this method to add a category by name
-    def add_category(self, category_name):
-        category = Category.find_by_name(category_name)
-        if category:
-            print(f"Category '{category_name}' already exists.")
-        else:
-            self.associate_category(category)
 
     @classmethod
     def find_by_title(cls, title):

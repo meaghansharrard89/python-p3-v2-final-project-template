@@ -7,6 +7,7 @@ class Category:
     def __init__(self, name, recipe_id=None, id=None):
         self._id = id
         self._name = name
+        #To store multiple recipe IDs
         self._recipe_id = recipe_id or []
 
     @property
@@ -18,9 +19,9 @@ class Category:
         return self._name
 
     @name.setter
-    def name(self, value):
-        if isinstance(value, str) and len(value):
-            self._name = value
+    def name(self, name):
+        if isinstance(name, str) and len(name):
+            self._name = name
         else:
             raise ValueError("Name must be a non-empty string")
 
@@ -56,7 +57,7 @@ class Category:
             INSERT INTO categories (name, recipe_id)
             VALUES (?, ?)
         """
-        # Use the recipe_id attribute directly in the execute call
+        # For returning multiple recipe IDs
         CURSOR.execute(sql, (self.name, ",".join(map(str, self.recipe_id))))
         CONN.commit()
 
@@ -80,6 +81,7 @@ class Category:
             SET recipe_id = ? 
             WHERE id = ?
         """
+        # For updating multipe recipe IDs
         CURSOR.execute(sql, (",".join(map(str, self.recipe_id)), self.id))
         CONN.commit()
 
@@ -108,13 +110,13 @@ class Category:
 
     @classmethod
     def find_recipe_id_by_name(cls, name):
-        # Find a category's recipe_id by its name
+        # Find a category's recipe ID by its name
         sql = """
             SELECT recipe_id
             FROM categories
             WHERE name = ?
         """
-        # Return the recipe_id
+        # Return the recipe ID(s)
         row = CURSOR.execute(sql, (name,)).fetchone()
         return row[0] if row else None
 

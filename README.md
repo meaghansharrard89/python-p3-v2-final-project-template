@@ -1,22 +1,22 @@
 <h1><b>🌟Introducing: The Cookbook Chronicles - Your Epic Culinary Odyssey!🌟</b></h1>
 
-Ahoy there, Culinary Captains! Embark on a gastronomic journey like never before with The Cookbook Chronicles. This isn't just a recipe organizer; it's your passport to a world of flavors, a digital haven for your culinary escapades!
+Ahoy there, Culinary Captains! Embark on a journey like never before with The Cookbook Chronicles. This isn't just a recipe organizer; it's your passport to a world of flavors!
 
 Here's why The Cookbook Chronicles is the ultimate companion for your kitchen adventures:
 
 <h2><b>🍽️ Unleash Your Culinary Creativity:</b></h2>
 
-Dive into a realm where creating new recipes is a joyous celebration of flavors and innovation.
+Create new recipes with instructions, ingredients, and the recipe's category.
 
 <h2><b>🔥 Ingredient Extravaganza:</b></h2>
 
-Uncover the secrets of your dishes by exploring the intricate dance of ingredients and categories in each recipe.
+Don't have all the ingredients needed on hand? Fear not! Keep track of all ingredients you need to buy with the separate Ingredients table.
 
 <h2><b>✨ Power Over Delete and Update:</b></h2>
 
-Fear not the culinary missteps! Exercise your chef's prerogative to delete/update recipes, ingredients, or categories with the swipe of a digital spatula.
+Exercise your chef's prerogative to delete recipes, and update/delete ingredients and categories with the swipe of a digital spatula.
 
-Let The Cookbook Chronicles be your culinary compass, steering you towards a symphony of taste that echoes with your kitchen prowess! Happy Cooking!
+Let The Cookbook Chronicles be your culinary compass, and happy cooking!
 
 <h1>Project Details</h1>
 
@@ -78,7 +78,7 @@ Category contains an ID column, category name column (breakfast, lunch, etc.) an
 
 <h3>ingredient.py</h3>
 
-Ingredient contains an ID column, ingredient name column (salt, butter, etc.) and a recipe ID column, which is connected to recipes in recipe.py.
+Ingredient contains an ID column, ingredient name column (salt, butter, etc.) and a recipe ID column, which is connected to recipes in recipe.py. This is for ingredients the user needs to "buy".
 
 <h3>recipes.py</h3>
 
