@@ -75,5 +75,21 @@ class RecipeIngredient:
         CURSOR.execute(sql, (recipe_id,))
         CONN.commit()
 
+    @classmethod
+    def find_by_recipe_id(cls, recipe_id):
+        sql = "SELECT ingredient_id FROM recipe_ingredients WHERE recipe_id = ?"
+        rows = CURSOR.execute(sql, (recipe_id,)).fetchall()
+
+        if rows:
+            ingredient_ids = [row[0] for row in rows]
+            ingredients = [
+                Ingredient.find_by_id(ingredient_id).name
+                for ingredient_id in ingredient_ids
+            ]
+            return ingredients
+        else:
+            print(f"No ingredients found for recipe with ID {recipe_id}")
+            return []
+
 
 from models.recipe import Recipe

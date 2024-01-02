@@ -264,6 +264,16 @@ def update_recipe():
         print(f"Recipe {id_} not found")
 
 
+# RecipeIngredient:
+
+
+def ingredient_by_recipe_id():
+    # Find ingredient(s) in recipe_ingredients by recipe ID
+    recipe_id = input("Enter the recipe's id: ")
+    ingredients = RecipeIngredient.find_by_recipe_id(recipe_id)
+    print(f"Ingredients for recipe {recipe_id}: {', '.join(ingredients)}")
+
+
 # Program:
 
 

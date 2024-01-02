@@ -17,6 +17,7 @@ from helpers import (
     display_all_recipes,
     recipe_by_id,
     update_recipe,
+    ingredient_by_recipe_id,
 )
 
 
@@ -47,14 +48,16 @@ def main():
         elif choice == "10":
             update_ingredient()
         elif choice == "11":
-            create_category()
+            ingredient_by_recipe_id()
         elif choice == "12":
-            delete_category()
+            create_category()
         elif choice == "13":
-            display_all_categories()
+            delete_category()
         elif choice == "14":
-            category_by_id()
+            display_all_categories()
         elif choice == "15":
+            category_by_id()
+        elif choice == "16":
             update_category()
         else:
             print("Invalid choice")
@@ -73,11 +76,12 @@ def menu():
     print("8. Display all ingredients")
     print("9. Find an ingredient by ID")
     print("10. Update an existing ingredient")
-    print("11. Add a new category")
-    print("12. Delete a category")
-    print("13. Display all categories")
-    print("14. Find a category by ID")
-    print("15. Update an existing category")
+    print("11. Find ingredient(s) by recipe ID")
+    print("12. Add a new category")
+    print("13. Delete a category")
+    print("14. Display all categories")
+    print("15. Find a category by ID")
+    print("16. Update an existing category")
 
 
 if __name__ == "__main__":
