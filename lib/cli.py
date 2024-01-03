@@ -1,4 +1,5 @@
-# lib/cli.py
+from rich.console import Console
+from rich.table import Table
 
 from helpers import (
     exit_program,
@@ -21,8 +22,54 @@ from helpers import (
 )
 
 
+def display_logo():
+    console = Console()
+
+    top_line = """
+**********************************************
+    """
+    logo = """
+ _____ _                                        
+|_   _| |                                       
+  | | | |__   ___                               
+  | | | '_ \ / _ \\                              
+  | | | | | |  __/                              
+ _____|_| |_|\\___| _    _                 _     
+/  __ \           | |  | |               | |    
+| /  \/ ___   ___ | | _| |__   ___   ___ | | __ 
+| |    / _ \ / _ \| |/ | '_ \ / _ \ / _ \| |/ / 
+| \__/| (_) | (_) |   <| |_) | (_) | (_) |   <  
+ _____/____/ \___/|_|\_|_.__/_\___/ ____/|_|\_\ 
+/  __ | |                   (_)    | |          
+| /  \| |__  _ __ ___  _ __  _  ___| | ___ ___  
+| |   | '_ \| '__/ _ \| '_ \| |/ __| |/ _ / __| 
+| \__/| | | | | | (_) | | | | | (__| |  __\__ \\ 
+ \____|_| |_|_|  \___/|_| |_|_|\___|_|\___|___/ 
+
+"""
+
+    bottom_line = """
+
+***********************************************
+    
+     A CLI project by Meaghan Sharrard
+
+***********************************************
+
+"""
+
+    console.print(top_line, style="magenta")
+    console.print(logo, style="bold green")
+    console.print(bottom_line, style="magenta")
+
+
 def main():
+    logo = True
     while True:
+        if logo is True:
+            display_logo()
+            logo = False
+
         menu()
         choice = input("> ")
         if choice == "0":
@@ -64,24 +111,40 @@ def main():
 
 
 def menu():
-    print("Start cookin', chef!")
-    print("0. Kitchen's closed")
-    print("1. Create a new recipe")
-    print("2. Delete a recipe")
-    print("3. Display all recipes")
-    print("4. Find a recipe by ID")
-    print("5. Update an existing recipe")
-    print("6. Add a new ingredient")
-    print("7. Delete an ingredient")
-    print("8. Display all ingredients")
-    print("9. Find an ingredient by ID")
-    print("10. Update an existing ingredient")
-    print("11. Find ingredient(s) by recipe ID")
-    print("12. Add a new category")
-    print("13. Delete a category")
-    print("14. Display all categories")
-    print("15. Find a category by ID")
-    print("16. Update an existing category")
+    console = Console()
+
+    options = [
+        "Kitchen's closed",
+        "Create a new recipe",
+        "Delete a recipe",
+        "Display all recipes",
+        "Find a recipe by ID",
+        "Update an existing recipe",
+        "Add a new ingredient",
+        "Delete an ingredient",
+        "Display all ingredients",
+        "Find an ingredient by ID",
+        "Update an existing ingredient",
+        "Find ingredients by recipe ID",
+        "Add a new category",
+        "Delete a category",
+        "Display all categories",
+        "Find a category by ID",
+        "Update an existing category",
+    ]
+
+    console.print()
+
+    for index, option in enumerate(options):
+        # Use different colors for numbers and options
+        number_style = "magenta"
+        option_style = "green"
+
+        console.print(f"[{index}]", style=number_style, end=" ")
+        console.print(option, style=option_style)
+
+        if index == 16:
+            console.print()  # This adds a line break
 
 
 if __name__ == "__main__":

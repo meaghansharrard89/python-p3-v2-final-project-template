@@ -2,6 +2,8 @@ from models.category import Category
 from models.ingredient import Ingredient
 from models.recipe import Recipe
 from models.recipe_ingredient import RecipeIngredient
+from rich.prompt import Prompt
+from rich.console import Console
 
 # Create tables if they don't exist
 Category.create_table()
@@ -121,16 +123,22 @@ def update_ingredient():
 
 
 def create_recipe():
-    title = input("Enter the title of the recipe: ")
-    instructions = input("Enter the instructions for the recipe: ")
-    category_id = input("Enter the category ID for the recipe: ")
+    console = Console()
+
+    title = Prompt.ask("[bold blue]Enter the title of the recipe[/bold blue]")
+    instructions = Prompt.ask(
+        "[bold blue]Enter the instructions for the recipe[/bold blue]"
+    )
+    category_id = Prompt.ask(
+        "[bold blue]Enter the category ID for the recipe[/bold blue]"
+    )
 
     # Check if the provided category ID exists
     category = Category.find_by_id(category_id)
 
     if category:
-        ingredients_input = input(
-            "Enter the ingredients for the recipe (comma-separated): "
+        ingredients_input = Prompt.ask(
+            "[bold blue]Enter the ingredients for the recipe (comma-separated)[/bold blue]"
         )
         ingredients_list = [
             ingredient.strip() for ingredient in ingredients_input.split(",")
@@ -162,9 +170,9 @@ def create_recipe():
         for ingredient_id in saved_ingredient_ids:
             RecipeIngredient(recipe, Ingredient.find_by_id(ingredient_id)).save()
 
-        print(f"Recipe '{title}' created successfully.")
+        console.print(f"[magenta]Recipe '{title}' created successfully.[/magenta]")
     else:
-        print(f"Category with ID {category_id} not found")
+        console.print(f"[red]Category with ID {category_id} not found[/red]")
 
 
 def delete_recipe():

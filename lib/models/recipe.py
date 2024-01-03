@@ -13,7 +13,7 @@ class Recipe:
         self._title = title
         self._instructions = instructions
         self._category = category
-        self._ingredients = ingredients  # Change to a list
+        self._ingredients = ingredients
 
     @property
     def id(self):
