@@ -15,108 +15,146 @@ RecipeIngredient.create_table()
 
 
 def create_category():
-    name = input("Enter the name of the category: ")
+    console = Console()
+
+    name = Prompt.ask("[blue]Enter the name of the category[/blue]")
     category = Category(name)
     category.save()
-    print(f"Category '{name}' created successfully.")
+    console.print()
+    console.print("[magenta]Category '{name}' created successfully.[/magenta]")
 
 
 def delete_category():
-    name = input("Enter the name of the category to delete: ")
+    console = Console()
+
+    name = Prompt.ask("[blue]Enter the name of the category to delete[/blue]")
     category = Category.find_by_name(name)
+    console.print()
     if category:
         category.delete()
-        print(f"Category '{name}' deleted successfully!")
+        console.print("[magenta]Category '{name}' deleted successfully![/magenta]")
     else:
-        print(f"Category '{name}' not found.")
+        console.print("[red]Category '{name}' not found.[/red]")
 
 
 def display_all_categories():
+    console = Console()
+
     categories = Category.get_all()
     if categories:
-        print("All Categories:")
+        console.print("[white]All Categories:[/white]")
+        console.print()
         for category in categories:
-            print(f"- {category.name}")
+            console.print(f"[magenta]- {category.name}[/magenta]")
     else:
-        print("No categories found.")
+        console.print("[red]No categories found.[/red]")
 
 
 def category_by_id():
     # Find the category by ID
-    id_ = input("Enter the category's id: ")
+    console = Console()
+
+    id_ = Prompt.ask("[blue]Enter the category's id[/blue]")
+    console.print()
     category = Category.find_by_id(id_)
-    print(category.name) if category else print(f"Category {id_} not found")
+    if category:
+        console.print(f"[magenta]{category.name}[/magenta]")
+    else:
+        console.print(f"[red]Category {id_} not found[/red]")
 
 
 def update_category():
     # Update the category
-    id_ = input("Enter the category id: ")
+    console = Console()
+    id_ = Prompt.ask("[blue]Enter the category id[/blue]")
     if category := Category.find_by_id(id_):
         try:
-            name = input("Enter the new category name: ")
+            name = Prompt.ask("[blue]Enter the new category name[/blue]")
             category.name = name
             category.update()
-
-            print(f"Category successfully updated!\nCategory: {category.name}")
+            console.print()
+            console.print(f"[magenta]Category successfully updated![/magenta]")
 
         except Exception as exc:
-            print("Error updating category:", exc)
+            console.print(f"[red]Error updating category:[/red] {exc}")
     else:
-        print(f"Category {id_} not found")
+        console.print(f"[red]Category {id_} not found[/red]")
+
+
+if __name__ == "__main__":
+    update_category()
 
 
 # Ingredient:
 
 
 def create_ingredient():
-    name = input("Enter the name of the ingredient: ")
+    console = Console()
+
+    name = Prompt.ask("[blue]Enter the name of the ingredient[/blue]")
     ingredient = Ingredient(name)
     ingredient.save()
-    print(f"Ingredient '{name}' created successfully.")
+    console.print()
+    console.print("[magenta]Ingredient '{name}' created successfully.[/magenta]")
 
 
 def delete_ingredient():
-    name = input("Enter the name of the ingredient to delete: ")
+    console = Console()
+
+    name = Prompt.ask("[blue]Enter the name of the ingredient to delete[/blue]")
     ingredient = Ingredient.find_by_name(name)
+    console.print()
     if ingredient:
         ingredient.delete()
-        print(f"Ingredient '{name}' deleted successfully!")
+        console.print("[magenta]Ingredient '{name}' deleted successfully![/magenta]")
     else:
-        print(f"Ingredient '{name}' not found.")
+        console.print("[red]Ingredient '{name}' not found.[/red]")
 
 
 def display_all_ingredients():
+    console = Console()
+
     ingredients = Ingredient.get_all()
     if ingredients:
-        print("All Ingredients:")
+        console.print("[white]All Ingredients:[/white]")
+        console.print()
         for ingredient in ingredients:
-            print(f"- {ingredient.name}")
+            console.print(f"[magenta]- {ingredient.name}[/magenta]")
     else:
-        print("No ingredients found.")
+        console.print("[red]No ingredients found.[/red]")
 
 
 def ingredient_by_id():
     # Find ingredient by ID
-    id_ = input("Enter the ingredient's id: ")
+    console = Console()
+
+    id_ = Prompt.ask("[blue]Enter the ingredient's id[/blue]")
     ingredient = Ingredient.find_by_id(id_)
-    print(ingredient.name) if ingredient else print(f"Ingredient {id_} not found")
+    console.print()
+    if ingredient:
+        console.print(f"[magenta]{ingredient.name}[/magenta]")
+    else:
+        console.print(f"[red]Ingredient {id_} not found[/red]")
 
 
 def update_ingredient():
     # Update ingredient
-    id_ = input("Enter the ingredient id: ")
+    console = Console()
+
+    id_ = Prompt.ask("[blue]Enter the ingredient id[/blue]")
+
     if ingredient := Ingredient.find_by_id(id_):
         try:
-            name = input("Enter the new ingredient name: ")
+            name = Prompt.ask("[blue]Enter the new ingredient name[/blue]")
             ingredient.name = name
             ingredient.update()
 
-            print(f"Ingredient successfully updated!\nIngredient: {ingredient.name}")
+            console.print("[magenta]Ingredient successfully updated![/magenta]")
 
         except Exception as exc:
-            print("Error updating ingredient:", exc)
+            console.print("[red]Error updating ingredient[/red]", exc)
     else:
-        print(f"Ingredient {id_} not found")
+        console.print("[red]Ingredient {id_} not found[/red]")
 
 
 # Recipe:
@@ -125,20 +163,16 @@ def update_ingredient():
 def create_recipe():
     console = Console()
 
-    title = Prompt.ask("[bold blue]Enter the title of the recipe[/bold blue]")
-    instructions = Prompt.ask(
-        "[bold blue]Enter the instructions for the recipe[/bold blue]"
-    )
-    category_id = Prompt.ask(
-        "[bold blue]Enter the category ID for the recipe[/bold blue]"
-    )
+    title = Prompt.ask("[blue]Enter the title of the recipe[/blue]")
+    instructions = Prompt.ask("[blue]Enter the instructions for the recipe[/blue]")
+    category_id = Prompt.ask("[blue]Enter the category ID for the recipe[/blue]")
 
     # Check if the provided category ID exists
     category = Category.find_by_id(category_id)
 
     if category:
         ingredients_input = Prompt.ask(
-            "[bold blue]Enter the ingredients for the recipe (comma-separated)[/bold blue]"
+            "[blue]Enter the ingredients for the recipe (comma-separated)[/blue]"
         )
         ingredients_list = [
             ingredient.strip() for ingredient in ingredients_input.split(",")
@@ -169,55 +203,89 @@ def create_recipe():
         # Add the recipe and ingredient associations to RecipeIngredient
         for ingredient_id in saved_ingredient_ids:
             RecipeIngredient(recipe, Ingredient.find_by_id(ingredient_id)).save()
-
+        console.print()
         console.print(f"[magenta]Recipe '{title}' created successfully.[/magenta]")
     else:
         console.print(f"[red]Category with ID {category_id} not found[/red]")
 
 
 def delete_recipe():
-    title = input("Enter the title of the recipe to delete: ")
+    console = Console()
+
+    title = Prompt.ask("[bold blue]Enter the title of the recipe to delete[/bold blue]")
     recipe = Recipe.find_by_title(title)
     if recipe:
         recipe.delete()
-        print(f"Recipe '{title}' deleted successfully!")
+        console.print(f"[magenta]Recipe '{title}' successfully deleted.[/magenta]")
     else:
-        print(f"Recipe '{title}' not found.")
+        console.print(f"[red]Recipe '{title}' not found.[/red]")
 
 
 def display_all_recipes():
+    console = Console()
+
     recipes = Recipe.get_all()
     if recipes:
-        print("All Recipes:")
+        console.print("[white]All Recipes:[/white]")
+        console.print()
         for recipe in recipes:
-            print(f"Title: {recipe.title}")
-            print(f"Instructions: {recipe.instructions}")
-            print(
-                f"Category: {recipe.category.name if recipe.category else 'Uncategorized'}"
+            console.print(f"[magenta]Title:[/magenta] [blue]{recipe.title}[/blue]")
+            console.print(
+                f"[magenta]Instructions:[/magenta] [green]{recipe.instructions}[/green]"
             )
-            print(f"Ingredients: {recipe.ingredients}")
+            console.print(
+                f"[magenta]Category:[/magenta] [purple]{recipe.category.name if recipe.category else 'Uncategorized'}[/purple]"
+            )
+            console.print(
+                f"[magenta]Ingredients:[/magenta] [orange]{recipe.ingredients}[/orange]"
+            )
+            console.print()
     else:
-        print("No recipes found.")
+        console.print(f"[red]No recipes found.[/red]")
 
 
 def recipe_by_id():
     # Find recipe by ID
-    id_ = input("Enter the recipe's id: ")
+    console = Console()
+
+    id_ = Prompt.ask("[blue]Enter the recipe's id[/blue]")
+    console.print()
+
     recipe = Recipe.find_by_id(id_)
-    print(recipe.title) if recipe else print(f"Recipe {id_} not found")
+
+    if recipe:
+        console.print("[white]Recipe Details:[/white]")
+        console.print()
+        console.print(f"[magenta]Title:[/magenta] [blue]{recipe.title}[/blue]")
+        console.print(
+            f"[magenta]Instructions:[/magenta] [green]{recipe.instructions}[/green]"
+        )
+        console.print(
+            f"[magenta]Category:[/magenta] [purple]{recipe.category.name if recipe.category else 'Uncategorized'}[/purple]"
+        )
+        console.print(
+            f"[magenta]Ingredients:[/magenta] [orange]{recipe.ingredients}[/orange]"
+        )
+    else:
+        console.print(f"[red]Recipe {id_} not found[/red]")
 
 
 def update_recipe():
     # Update recipe
-    id_ = input("Enter the recipe id: ")
-    if recipe := Recipe.find_by_id(id_):
+    console = Console()
+
+    id_ = Prompt.ask("[blue]Enter the recipe id[/blue]")
+    recipe = Recipe.find_by_id(id_)
+
+    if recipe:
         try:
-            title = input("Enter the new recipe title: ")
-            instructions = input("Enter the new instructions: ")
-            category_id = input("Enter the new category ID: ")
+            title = Prompt.ask("[blue]Enter the new recipe title[/blue]")
+            instructions = Prompt.ask("[blue]Enter the new instructions[/blue]")
+            category_id = Prompt.ask("[blue]Enter the new category ID[/blue]")
 
             # Check if the provided category ID exists
             category = Category.find_by_id(category_id)
+
             if category:
                 # Update recipe attributes
                 recipe.title = title
@@ -225,12 +293,14 @@ def update_recipe():
                 recipe.category = category
 
                 # Update ingredients separately
-                ingredients_input = input(
-                    "Enter the updated ingredients (comma-separated): "
+                ingredients_input = Prompt.ask(
+                    "[blue]Enter the updated ingredients (comma-separated)[/blue]"
                 )
                 ingredients_list = [
                     ingredient.strip() for ingredient in ingredients_input.split(",")
                 ]
+
+                console.print()
 
                 # Check and save ingredients
                 saved_ingredient_ids = []
@@ -261,15 +331,15 @@ def update_recipe():
                 recipe.ingredients = ingredients_list
                 recipe.update()
 
-                print(f"Recipe successfully updated!\nRecipe: {recipe.title}")
+                console.print(f"[magenta]Recipe successfully updated![/magenta]")
 
             else:
-                print(f"Category with ID {category_id} not found")
+                console.print(f"[red]Category with ID {category_id} not found[/red]")
 
         except Exception as exc:
-            print("Error updating recipe:", exc)
+            console.print(f"[red]Error updating recipe: {exc}[/red]")
     else:
-        print(f"Recipe {id_} not found")
+        console.print(f"[red]Recipe {id_} not found[/red]")
 
 
 # RecipeIngredient:
@@ -277,14 +347,25 @@ def update_recipe():
 
 def ingredient_by_recipe_id():
     # Find ingredient(s) in recipe_ingredients by recipe ID
-    recipe_id = input("Enter the recipe's id: ")
+    console = Console()
+
+    recipe_id = Prompt.ask("[blue]Enter the recipe's id[/blue]")
     ingredients = RecipeIngredient.find_by_recipe_id(recipe_id)
-    print(f"Ingredients for recipe {recipe_id}: {', '.join(ingredients)}")
+
+    console.print()
+    if ingredients:
+        console.print(
+            f"[magenta]Ingredients for recipe {recipe_id}:[/magenta] {', '.join(ingredients)}"
+        )
+    else:
+        console.print(f"[red]No ingredients found for recipe {recipe_id}[/red]")
 
 
 # Program:
 
 
 def exit_program():
-    print("Thanks for cooking with us today, chef!")
+    console = Console()
+
+    console.print("[magenta]Thanks for cooking with us today, chef![/magenta]")
     exit()

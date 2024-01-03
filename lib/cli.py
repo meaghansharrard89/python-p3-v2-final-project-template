@@ -57,13 +57,14 @@ def display_logo():
 ***********************************************
 
 """
-
     console.print(top_line, style="magenta")
     console.print(logo, style="bold green")
     console.print(bottom_line, style="magenta")
 
 
 def main():
+    console = Console()
+
     logo = True
     while True:
         if logo is True:
@@ -72,6 +73,7 @@ def main():
 
         menu()
         choice = input("> ")
+        console.print()
         if choice == "0":
             exit_program()
         elif choice == "1":
