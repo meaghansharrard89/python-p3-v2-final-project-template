@@ -1,6 +1,8 @@
 from models.__init__ import CURSOR, CONN
 from models.recipe import Recipe
 from models.ingredient import Ingredient
+from rich.console import Console
+from rich.table import Table
 
 
 class RecipeIngredient:
@@ -36,6 +38,30 @@ class RecipeIngredient:
         """
         CURSOR.execute(sql)
         CONN.commit()
+
+    @classmethod
+    def display_table_schema(cls):
+        console = Console()
+        table = Table(title="[bold blue]Recipe Ingredients Table Schema[/bold blue]")
+
+        table.add_column("[green]Column[/green]")
+        table.add_column("[green]Data Type[/green]")
+        table.add_column("[green]Constraints[/green]")
+
+        schema = [
+            ("id", "INTEGER", "PRIMARY KEY"),
+            ("recipe_id", "INTEGER", "FOREIGN KEY (recipe_id) REFERENCES recipes(id)"),
+            (
+                "ingredient_id",
+                "INTEGER",
+                "FOREIGN KEY (ingredient_id) REFERENCES ingredients(id)",
+            ),
+        ]
+
+        for column, data_type, constraints in schema:
+            table.add_row(column, data_type, constraints)
+
+        console.print(table)
 
     def save(self):
         sql = """
