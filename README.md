@@ -1,5 +1,23 @@
 <h1><b>🌟Introducing: The Cookbook Chronicles - Your Epic Culinary Odyssey!🌟</b></h1>
 
+---
+
+|\_ \_| |  
+ | | | |** \_**  
+ | | | '_ \ / _ \  
+ | | | | | | **/  
+ \_\_\_**|_| |_|\_**| \_ \_ \_  
+/ ** \ | | | | | |  
+| / \/ **\_ \_** | | \_| |** \_** **\_ | | **
+| | / _ \ / _ \| |/ | '_ \ / _ \ / \_ \| |/ /
+| \__/| (_) | (_) | <| |_) | (_) | (_) | <  
+ **\_**/\_**\_/ \_**/|_|\_|_.**/\_\_**/ \_**_/|_|\_\
+/ ** | | (_) | |  
+| / \| |\_\_ _ ** \_** _ \_\_ _ **_| | _** **_  
+| | | '_ \| '**/ _ \| '_ \| |/ **| |/ \_ / **|
+| \__/| | | | | | (_) | | | | | (**| | **\_\_ \
+\_**_|_| |_|_| \_**/|_| |_|_|\_\_\_|_|\_**|\_**/
+
 Ahoy there, Culinary Captains! Embark on a journey like never before with The Cookbook Chronicles. This isn't just a recipe organizer; it's your passport to a world of flavors!
 
 Here's why The Cookbook Chronicles is the ultimate companion for your kitchen adventures:
