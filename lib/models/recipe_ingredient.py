@@ -1,8 +1,6 @@
 from models.__init__ import CURSOR, CONN
 from models.recipe import Recipe
 from models.ingredient import Ingredient
-from rich.console import Console
-from rich.table import Table
 
 
 class RecipeIngredient:
@@ -39,30 +37,8 @@ class RecipeIngredient:
         CURSOR.execute(sql)
         CONN.commit()
 
-    @classmethod
-    def display_table_schema(cls):
-        console = Console()
-        table = Table(title="[bold blue]Recipe Ingredients Table Schema[/bold blue]")
-
-        table.add_column("[green]Column[/green]")
-        table.add_column("[green]Data Type[/green]")
-        table.add_column("[green]Constraints[/green]")
-
-        schema = [
-            ("id", "INTEGER", "PRIMARY KEY"),
-            ("recipe_id", "INTEGER", "FOREIGN KEY (recipe_id) REFERENCES recipes(id)"),
-            (
-                "ingredient_id",
-                "INTEGER",
-                "FOREIGN KEY (ingredient_id) REFERENCES ingredients(id)",
-            ),
-        ]
-
-        for column, data_type, constraints in schema:
-            table.add_row(column, data_type, constraints)
-
-        console.print(table)
-
+    # Create new recipe
+    # Update recipe
     def save(self):
         sql = """
             INSERT INTO recipe_ingredients (recipe_id, ingredient_id)
@@ -71,36 +47,14 @@ class RecipeIngredient:
         CURSOR.execute(sql, (self.recipe.id, self.ingredient.id))
         CONN.commit()
 
-    @classmethod
-    def find_by_recipe_and_ingredient(cls, recipe, ingredient):
-        sql = """
-            SELECT * FROM RecipeIngredient
-            WHERE recipe_id = ? AND ingredient_id = ?
-        """
-        params = (recipe.id, ingredient.id)
-        row = CURSOR.execute(sql, params).fetchone()
-        return cls.instance_from_db(row) if row and recipe and ingredient else None
-
-    @classmethod
-    def instance_from_db(cls, row):
-        if row is None:
-            return None
-
-        recipe_id, ingredient_id = row
-        recipe = Recipe.find_by_id(recipe_id)
-        ingredient = Ingredient.find_by_id(ingredient_id)
-
-        if recipe and ingredient:
-            return cls(recipe, ingredient, id=row[0])
-        else:
-            return None
-
+    # Update recipe
     @classmethod
     def delete_by_recipe_id(cls, recipe_id):
         sql = "DELETE FROM recipe_ingredients WHERE recipe_id = ?"
         CURSOR.execute(sql, (recipe_id,))
         CONN.commit()
 
+    # Find ingredients by recipe ID
     @classmethod
     def find_by_recipe_id(cls, recipe_id):
         sql = "SELECT ingredient_id FROM recipe_ingredients WHERE recipe_id = ?"
@@ -114,7 +68,6 @@ class RecipeIngredient:
             ]
             return ingredients
         else:
-            print(f"No ingredients found for recipe with ID {recipe_id}")
             return []
 
 

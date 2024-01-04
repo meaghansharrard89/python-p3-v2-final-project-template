@@ -47,11 +47,11 @@ def display_all_categories():
         for category in categories:
             console.print(f"[magenta]- {category.name}[/magenta]")
     else:
+        console.print()
         console.print("[red]No categories found.[/red]")
 
 
 def category_by_id():
-    # Find the category by ID
     console = Console()
 
     id_ = Prompt.ask("[blue]Enter the category's id[/blue]")
@@ -64,7 +64,6 @@ def category_by_id():
 
 
 def update_category():
-    # Update the category
     console = Console()
     id_ = Prompt.ask("[blue]Enter the category id[/blue]")
     if category := Category.find_by_id(id_):
@@ -76,8 +75,10 @@ def update_category():
             console.print(f"[magenta]Category '{name}' successfully updated![/magenta]")
 
         except Exception as exc:
+            console.print()
             console.print(f"[red]Error updating category:[/red] {exc}")
     else:
+        console.print()
         console.print(f"[red]Category {id_} not found[/red]")
 
 
@@ -95,7 +96,7 @@ def create_ingredient():
     ingredient = Ingredient(name)
     ingredient.save()
     console.print()
-    console.print("[magenta]Ingredient '{name}' created successfully.[/magenta]")
+    console.print(f"[magenta]Ingredient '{name}' created successfully.[/magenta]")
 
 
 def delete_ingredient():
@@ -106,9 +107,9 @@ def delete_ingredient():
     console.print()
     if ingredient:
         ingredient.delete()
-        console.print("[magenta]Ingredient '{name}' deleted successfully![/magenta]")
+        console.print(f"[magenta]Ingredient '{name}' deleted successfully![/magenta]")
     else:
-        console.print("[red]Ingredient '{name}' not found.[/red]")
+        console.print(f"[red]Ingredient '{name}' not found.[/red]")
 
 
 def display_all_ingredients():
@@ -121,11 +122,11 @@ def display_all_ingredients():
         for ingredient in ingredients:
             console.print(f"[magenta]- {ingredient.name}[/magenta]")
     else:
+        console.print()
         console.print("[red]No ingredients found.[/red]")
 
 
 def ingredient_by_id():
-    # Find ingredient by ID
     console = Console()
 
     id_ = Prompt.ask("[blue]Enter the ingredient's id[/blue]")
@@ -138,7 +139,6 @@ def ingredient_by_id():
 
 
 def update_ingredient():
-    # Update ingredient
     console = Console()
 
     id_ = Prompt.ask("[blue]Enter the ingredient id[/blue]")
@@ -152,9 +152,11 @@ def update_ingredient():
             console.print("[magenta]Ingredient successfully updated![/magenta]")
 
         except Exception as exc:
+            console.print()
             console.print("[red]Error updating ingredient[/red]", exc)
     else:
-        console.print("[red]Ingredient {id_} not found[/red]")
+        console.print()
+        console.print(f"[red]Ingredient {id_} not found[/red]")
 
 
 # Recipe:
@@ -166,8 +168,6 @@ def create_recipe():
     title = Prompt.ask("[blue]Enter the title of the recipe[/blue]")
     instructions = Prompt.ask("[blue]Enter the instructions for the recipe[/blue]")
     category_id = Prompt.ask("[blue]Enter the category ID for the recipe[/blue]")
-
-    # Check if the provided category ID exists
     category = Category.find_by_id(category_id)
 
     if category:
@@ -178,34 +178,26 @@ def create_recipe():
             ingredient.strip() for ingredient in ingredients_input.split(",")
         ]
 
-        # Check and save ingredients
         saved_ingredient_ids = []
         for ingredient_name in ingredients_list:
             existing_ingredient = Ingredient.find_by_name(ingredient_name)
 
             if existing_ingredient:
-                # Use the existing ingredient ID
                 ingredient_id = existing_ingredient.id
             else:
-                # Create and save a new ingredient
                 new_ingredient = Ingredient(ingredient_name)
                 new_ingredient.save()
                 ingredient_id = new_ingredient.id
 
             saved_ingredient_ids.append(ingredient_id)
-
-        # Create the recipe without saving it first
         recipe = Recipe(title, instructions, category, ingredients_list, None)
-
-        # Save the recipe
         recipe.save()
-
-        # Add the recipe and ingredient associations to RecipeIngredient
         for ingredient_id in saved_ingredient_ids:
             RecipeIngredient(recipe, Ingredient.find_by_id(ingredient_id)).save()
         console.print()
         console.print(f"[magenta]Recipe '{title}' created successfully.[/magenta]")
     else:
+        console.print()
         console.print(f"[red]Category with ID {category_id} not found[/red]")
 
 
@@ -216,8 +208,10 @@ def delete_recipe():
     recipe = Recipe.find_by_title(title)
     if recipe:
         recipe.delete()
+        console.print()
         console.print(f"[magenta]Recipe '{title}' successfully deleted.[/magenta]")
     else:
+        console.print()
         console.print(f"[red]Recipe '{title}' not found.[/red]")
 
 
@@ -238,11 +232,11 @@ def display_all_recipes():
             )
             console.print()
     else:
+        console.print()
         console.print(f"[red]No recipes found.[/red]")
 
 
 def recipe_by_id():
-    # Find recipe by ID
     console = Console()
 
     id_ = Prompt.ask("[blue]Enter the recipe's id[/blue]")
@@ -265,7 +259,6 @@ def recipe_by_id():
 
 
 def update_recipe():
-    # Update recipe
     console = Console()
 
     id_ = Prompt.ask("[blue]Enter the recipe id[/blue]")
@@ -276,17 +269,13 @@ def update_recipe():
             title = Prompt.ask("[blue]Enter the new recipe title[/blue]")
             instructions = Prompt.ask("[blue]Enter the new instructions[/blue]")
             category_id = Prompt.ask("[blue]Enter the new category ID[/blue]")
-
-            # Check if the provided category ID exists
             category = Category.find_by_id(category_id)
 
             if category:
-                # Update recipe attributes
                 recipe.title = title
                 recipe.instructions = instructions
                 recipe.category = category
 
-                # Update ingredients separately
                 ingredients_input = Prompt.ask(
                     "[blue]Enter the updated ingredients (comma-separated)[/blue]"
                 )
@@ -296,43 +285,40 @@ def update_recipe():
 
                 console.print()
 
-                # Check and save ingredients
                 saved_ingredient_ids = []
                 for ingredient_name in ingredients_list:
                     existing_ingredient = Ingredient.find_by_name(ingredient_name)
 
                     if existing_ingredient:
-                        # Use the existing ingredient ID
                         ingredient_id = existing_ingredient.id
                     else:
-                        # Create and save a new ingredient
                         new_ingredient = Ingredient(ingredient_name)
                         new_ingredient.save()
                         ingredient_id = new_ingredient.id
 
                     saved_ingredient_ids.append(ingredient_id)
 
-                # Delete existing recipe-ingredient associations
                 RecipeIngredient.delete_by_recipe_id(recipe.id)
 
-                # Add the updated recipe and ingredient associations to RecipeIngredient
                 for ingredient_id in saved_ingredient_ids:
                     RecipeIngredient(
                         recipe, Ingredient.find_by_id(ingredient_id)
                     ).save()
 
-                # Update the recipe in the database after updating both attributes and ingredients
                 recipe.ingredients = ingredients_list
                 recipe.update()
 
                 console.print(f"[magenta]Recipe successfully updated![/magenta]")
 
             else:
+                console.print()
                 console.print(f"[red]Category with ID {category_id} not found[/red]")
 
         except Exception as exc:
+            console.print()
             console.print(f"[red]Error updating recipe: {exc}[/red]")
     else:
+        console.print()
         console.print(f"[red]Recipe {id_} not found[/red]")
 
 
@@ -340,7 +326,6 @@ def update_recipe():
 
 
 def ingredient_by_recipe_id():
-    # Find ingredient(s) in recipe_ingredients by recipe ID
     console = Console()
 
     recipe_id = Prompt.ask("[blue]Enter the recipe's id[/blue]")
@@ -362,4 +347,5 @@ def exit_program():
     console = Console()
 
     console.print("[magenta]Thanks for cooking with us today, chef![/magenta]")
+    console.print()
     exit()

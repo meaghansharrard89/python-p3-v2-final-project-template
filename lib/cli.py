@@ -79,35 +79,35 @@ def main():
         elif choice == "1":
             create_recipe()
         elif choice == "2":
-            delete_recipe()
-        elif choice == "3":
             display_all_recipes()
-        elif choice == "4":
+        elif choice == "3":
             recipe_by_id()
-        elif choice == "5":
+        elif choice == "4":
             update_recipe()
+        elif choice == "5":
+            delete_recipe()
         elif choice == "6":
             create_ingredient()
         elif choice == "7":
-            delete_ingredient()
-        elif choice == "8":
             display_all_ingredients()
-        elif choice == "9":
+        elif choice == "8":
             ingredient_by_id()
-        elif choice == "10":
+        elif choice == "9":
             update_ingredient()
-        elif choice == "11":
+        elif choice == "10":
             ingredient_by_recipe_id()
+        elif choice == "11":
+            delete_ingredient()
         elif choice == "12":
             create_category()
         elif choice == "13":
-            delete_category()
-        elif choice == "14":
             display_all_categories()
-        elif choice == "15":
+        elif choice == "14":
             category_by_id()
-        elif choice == "16":
+        elif choice == "15":
             update_category()
+        elif choice == "16":
+            delete_category()
         else:
             print("Invalid choice")
 
@@ -118,21 +118,21 @@ def menu():
     options = [
         "Kitchen's closed",
         "Create a new recipe",
-        "Delete a recipe",
         "Display all recipes",
         "Find a recipe by ID",
         "Update an existing recipe",
+        "Delete a recipe",
         "Add a new ingredient",
-        "Delete an ingredient",
         "Display all ingredients",
         "Find an ingredient by ID",
         "Update an existing ingredient",
         "Find ingredients by recipe ID",
+        "Delete an ingredient",
         "Add a new category",
-        "Delete a category",
         "Display all categories",
         "Find a category by ID",
         "Update an existing category",
+        "Delete a category",
     ]
 
     console.print()
