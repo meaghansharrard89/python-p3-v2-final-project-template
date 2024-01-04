@@ -21,7 +21,7 @@ def create_category():
     category = Category(name)
     category.save()
     console.print()
-    console.print("[magenta]Category '{name}' created successfully.[/magenta]")
+    console.print(f"[magenta]Category '{name}' created successfully.[/magenta]")
 
 
 def delete_category():
@@ -32,9 +32,9 @@ def delete_category():
     console.print()
     if category:
         category.delete()
-        console.print("[magenta]Category '{name}' deleted successfully![/magenta]")
+        console.print(f"[magenta]Category '{name}' deleted successfully![/magenta]")
     else:
-        console.print("[red]Category '{name}' not found.[/red]")
+        console.print(f"[red]Category '{name}' not found.[/red]")
 
 
 def display_all_categories():
@@ -58,7 +58,7 @@ def category_by_id():
     console.print()
     category = Category.find_by_id(id_)
     if category:
-        console.print(f"[magenta]{category.name}[/magenta]")
+        console.print(f"[magenta]Category: {category.name}[/magenta]")
     else:
         console.print(f"[red]Category {id_} not found[/red]")
 
@@ -73,7 +73,7 @@ def update_category():
             category.name = name
             category.update()
             console.print()
-            console.print(f"[magenta]Category successfully updated![/magenta]")
+            console.print(f"[magenta]Category '{name}' successfully updated![/magenta]")
 
         except Exception as exc:
             console.print(f"[red]Error updating category:[/red] {exc}")
@@ -132,7 +132,7 @@ def ingredient_by_id():
     ingredient = Ingredient.find_by_id(id_)
     console.print()
     if ingredient:
-        console.print(f"[magenta]{ingredient.name}[/magenta]")
+        console.print(f"[magenta]Ingredient: {ingredient.name}[/magenta]")
     else:
         console.print(f"[red]Ingredient {id_} not found[/red]")
 
@@ -148,7 +148,7 @@ def update_ingredient():
             name = Prompt.ask("[blue]Enter the new ingredient name[/blue]")
             ingredient.name = name
             ingredient.update()
-
+            console.print()
             console.print("[magenta]Ingredient successfully updated![/magenta]")
 
         except Exception as exc:
@@ -231,13 +231,10 @@ def display_all_recipes():
         for recipe in recipes:
             console.print(f"[magenta]Title:[/magenta] [blue]{recipe.title}[/blue]")
             console.print(
-                f"[magenta]Instructions:[/magenta] [green]{recipe.instructions}[/green]"
+                f"[magenta]Instructions:[/magenta] [blue]{recipe.instructions}[/blue]"
             )
             console.print(
                 f"[magenta]Category:[/magenta] [purple]{recipe.category.name if recipe.category else 'Uncategorized'}[/purple]"
-            )
-            console.print(
-                f"[magenta]Ingredients:[/magenta] [orange]{recipe.ingredients}[/orange]"
             )
             console.print()
     else:
@@ -256,15 +253,12 @@ def recipe_by_id():
     if recipe:
         console.print("[white]Recipe Details:[/white]")
         console.print()
-        console.print(f"[magenta]Title:[/magenta] [blue]{recipe.title}[/blue]")
+        console.print(f"[magenta]Title:[/magenta] [purple]{recipe.title}[/purple]")
         console.print(
-            f"[magenta]Instructions:[/magenta] [green]{recipe.instructions}[/green]"
+            f"[magenta]Instructions:[/magenta] [purple]{recipe.instructions}[/purple]"
         )
         console.print(
             f"[magenta]Category:[/magenta] [purple]{recipe.category.name if recipe.category else 'Uncategorized'}[/purple]"
-        )
-        console.print(
-            f"[magenta]Ingredients:[/magenta] [orange]{recipe.ingredients}[/orange]"
         )
     else:
         console.print(f"[red]Recipe {id_} not found[/red]")

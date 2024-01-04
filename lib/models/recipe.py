@@ -83,7 +83,6 @@ class Recipe:
                 title TEXT NOT NULL,
                 instructions TEXT NOT NULL,
                 category_id INTEGER,
-                ingredients TEXT,
                 FOREIGN KEY (category_id) REFERENCES category(id)
             )
         """
@@ -117,8 +116,8 @@ class Recipe:
         )
 
         sql = """
-            INSERT INTO recipes (title, instructions, category_id, ingredients)
-            VALUES (?, ?, ?, ?)
+            INSERT INTO recipes (title, instructions, category_id)
+            VALUES (?, ?, ?)
         """
         CURSOR.execute(
             sql,
@@ -126,7 +125,7 @@ class Recipe:
                 self.title,
                 self.instructions,
                 self.category.id if self.category else None,
-                ingredients_str,
+                # ingredients_str,
             ),
         )
         self._id = CURSOR.lastrowid
@@ -150,15 +149,13 @@ class Recipe:
             recipe.title = row[1]
             recipe.instructions = row[2]
             recipe._category = Category.find_by_id(row[3]) if row[3] else None
-            recipe._ingredients = (
-                row[4].split(", ") if row[4] else []
-            )  # Split ingredients
+            recipe._ingredients = row[4].split(", ") if len(row) > 4 and row[4] else []
         else:
             recipe = cls(
                 row[1],
                 row[2],
                 Category.find_by_id(row[3]) if row[3] else None,
-                row[4].split(", ") if row[4] else [],  # Split ingredients
+                row[4].split(", ") if len(row) > 4 and row[4] else [],
             )
             recipe._id = row[0]
             cls.all[recipe.id] = recipe
@@ -248,7 +245,7 @@ class Recipe:
     def update(self):
         sql = """
             UPDATE recipes
-            SET title = ?, instructions = ?, category_id = ?, ingredients = ?
+            SET title = ?, instructions = ?, category_id = ?
             WHERE id = ?
         """
         CURSOR.execute(
@@ -257,7 +254,6 @@ class Recipe:
                 self.title,
                 self.instructions,
                 self.category.id if self.category else None,
-                ", ".join(self.ingredients) if self.ingredients else None,
                 self.id,
             ),
         )
