@@ -36,21 +36,21 @@ Explore the program through these different menu options:
 <ul>
     <li><b>0- Kitchen's closed:</b> closes the menu and brings users back to the program files.</li>
     <li><b>1- Create a new recipe:</b> enter the title, ingredients, instructions, and category to create a new recipe. The new recipe will add ingredients to the ingredients/recipe_ingredients tables (if they don't already exist).</li>
-    <li><b>2- Delete a recipe:</b> enter the title of the recipe to delete.</li>
-    <li><b>3- Display all recipes:</b> displays all recipes and associated information.</li>
-    <li><b>4- Find a recipe by ID:</b> returns the recipe title after searching by recipe ID.</li>
-    <li><b>5- Update an existing recipe:</b> update a recipe's title, instructions, ingredients, or category. Any changes made to ingredients will reflect in the recipe_ingredients table.
+    <li><b>2- Display all recipes:</b> displays all recipes and associated information.</li>
+    <li><b>3- Find a recipe by ID:</b> returns the recipe title after searching by recipe ID.</li>
+    <li><b>4- Update an existing recipe:</b> update a recipe's title, instructions, ingredients, or category. Any changes made to ingredients will reflect in the recipe_ingredients table.
+    <li><b>5- Delete a recipe:</b> enter the title of the recipe to delete.</li>
     <li><b>6- Add a new ingredient:</b> add a new ingredient by entering the name of the ingredient.</li>
-    <li><b>7- Delete an ingredient:</b> enter the name of the ingredient to delete.</li>
-    <li><b>8- Display all ingredients:</b> displays all ingredients.</li>
-    <li><b>9- Find an ingredient by ID:</b> returns the ingredient name after searching by ingredient ID.</li>
-    <li><b>10- Update an existing ingredient:</b> update an ingredient's name.</li>
-    <li><b>11- Find ingredient(s) by recipe ID:</b> returns all ingredients associated with a specific recipe ID.
+    <li><b>7- Display all ingredients:</b> displays all ingredients.</li>
+    <li><b>8- Find an ingredient by ID:</b> returns the ingredient name after searching by ingredient ID.</li>
+    <li><b>9- Update an existing ingredient:</b> update an ingredient's name.</li>
+    <li><b>10- Find ingredient(s) by recipe ID:</b> returns all ingredients associated with a specific recipe ID.
+    <li><b>11- Delete an ingredient:</b> enter the name of the ingredient to delete.</li>
     <li><b>12- Add a new category:</b> add a new category by entering the name of the category.</li>
-    <li><b>13- Delete a category:</b> enter the name of the category to delete.</li>
-    <li><b>14- Display all categories:</b> displays all categories.</li>
-    <li><b>16- Find a category by ID:</b> returns the category name after searching by category ID.</li>
-    <li><b>17- Update an existing category:</b> update a category's name.</li>
+    <li><b>13- Display all categories:</b> displays all categories.</li>
+    <li><b>14- Find a category by ID:</b> returns the category name after searching by category ID.</li>
+    <li><b>15- Update an existing category:</b> update a category's name.</li>
+    <li><b>16- Delete a category:</b> enter the name of the category to delete.</li>
 </ul>
 
 <h2>Program Information</h2>
@@ -74,15 +74,15 @@ Explore the program through these different menu options:
 
 <h3>category.py</h3>
 
-Category contains an ID column, category name column (breakfast, lunch, etc.) and a recipe ID column, which is connected to recipes in recipe.py.
+Category contains an ID column and a category name column (breakfast, lunch, etc.), which is connected to recipes in recipe.py.
 
 <h3>ingredient.py</h3>
 
-Ingredient contains an ID column, ingredient name column (salt, butter, etc.) and a recipe ID column, which is connected to recipes in recipe.py. This is for ingredients the user needs to "buy".
+Ingredient contains an ID column and an ingredient name column (salt, butter, etc.), which is connected to recipes in recipe.py. This is for ingredients the user needs to "buy".
 
 <h3>recipes.py</h3>
 
-Recipe contains five columns: ID, title, ingredients, instructions, and category.
+Recipe contains four columns: ID, title, instructions, and category.
 
 <h3>recipe_ingredients.py</h3>
 
