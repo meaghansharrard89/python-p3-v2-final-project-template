@@ -207,9 +207,21 @@ def delete_recipe():
     title = Prompt.ask("[bold blue]Enter the title of the recipe to delete[/bold blue]")
     recipe = Recipe.find_by_title(title)
     if recipe:
+        recipe_id = recipe.id
+        ingredient_names = RecipeIngredient.find_by_recipe_id(recipe_id)
+        RecipeIngredient.delete_by_recipe_id(recipe_id)
+
+        for ingredient_name in ingredient_names:
+            ingredient = Ingredient.find_by_name(ingredient_name)
+            if ingredient:
+                ingredient.delete()
+
         recipe.delete()
+
         console.print()
-        console.print(f"[magenta]Recipe '{title}' successfully deleted.[/magenta]")
+        console.print(
+            f"[magenta]Recipe '{title}' and associated ingredients successfully deleted.[/magenta]"
+        )
     else:
         console.print()
         console.print(f"[red]Recipe '{title}' not found.[/red]")
