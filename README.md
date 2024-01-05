@@ -30,7 +30,7 @@ Let The Cookbook Chronicles be your culinary compass, and happy cooking!
         ├── category.py
         └── ingredient.py
         ├── recipe.py
-        ├── recipe_ingredients.py
+        ├── recipe_ingredient.py
     ├── cli.py
     ├── debug.py
     ├── helpers.py
