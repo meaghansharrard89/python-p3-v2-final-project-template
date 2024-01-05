@@ -20,6 +20,49 @@ Let The Cookbook Chronicles be your culinary compass, and happy cooking!
 
 <h1>Project Details</h1>
 
+<h2>Program Information</h2>
+
+```console
+
+└── lib
+    ├── models
+        ├── __init__.py
+        ├── category.py
+        └── ingredient.py
+        ├── recipe.py
+        ├── recipe_ingredients.py
+    ├── cli.py
+    ├── debug.py
+    ├── helpers.py
+├── Pipfile
+├── Pipfile.lock
+├── README.md
+```
+
+<h3>category.py</h3>
+
+Category contains an ID and name column (breakfast, lunch, etc.), which is connected to a recipe through the category_id column in recipes.py. Each recipe can have only one category, but a category can be associated with many recipes.
+
+<h3>ingredient.py</h3>
+
+Ingredient contains an ID and name column (salt, butter, etc.), which is connected to a recipe through a joint table in recipe_ingredients.py in the ingredient_id column. Many recipes can be associated with many ingredients, and vice versa.
+
+<h3>recipes.py</h3>
+
+Recipe contains four columns: ID, title, instructions, and category_id. A recipe can only have one category but can have multiple ingredients.
+
+<h3>recipe_ingredients.py</h3>
+
+RecipeIngredient contains three columns: id, recipe_id, and ingredient_id. All new recipes created will have the ingredient's ID stored in this table along with the associated recipe ID, while the name of the ingredient will be stored in the ingredients table.
+
+<h3>cli.py</h3>
+
+Imports functions from helper.py and organizes them in a way that matches what the user sees in their terminal.
+
+<h3>helpers.py</h3>
+
+These functions allow the user to interact with the database with the help of functions imported from category.py, recipe.py, ingredient.py, and recipe_ingredient.py.
+
 <h2>Getting Started:</h2>
 
 To start this program, please follow the instructions below:
@@ -52,46 +95,3 @@ Explore the program through these different menu options:
     <li><b>15- Update an existing category:</b> update a category's name.</li>
     <li><b>16- Delete a category:</b> enter the name of the category to delete.</li>
 </ul>
-
-<h2>Program Information</h2>
-
-```console
-
-└── lib
-    ├── models
-        ├── __init__.py
-        ├── category.py
-        └── ingredient.py
-        ├── recipe.py
-        ├── recipe_ingredients.py
-    ├── cli.py
-    ├── debug.py
-    ├── helpers.py
-├── Pipfile
-├── Pipfile.lock
-├── README.md
-```
-
-<h3>category.py</h3>
-
-Category contains an ID column and a category name column (breakfast, lunch, etc.), which is connected to recipes in recipe.py.
-
-<h3>ingredient.py</h3>
-
-Ingredient contains an ID column and an ingredient name column (salt, butter, etc.), which is connected to recipes in recipe.py. This is for ingredients the user needs to "buy".
-
-<h3>recipes.py</h3>
-
-Recipe contains four columns: ID, title, instructions, and category.
-
-<h3>recipe_ingredients.py</h3>
-
-RecipeIngredient contains three columns: id, recipe ID, and ingredient ID. All new recipes created will have the ingredients stored in this table along with the associated recipe ID.
-
-<h3>cli.py</h3>
-
-Imports functions from helper.py and organizes them in a way that matches what the user sees in their terminal.
-
-<h3>helpers.py</h3>
-
-These functions allow the user to interact with the database with the help of functions imported from category.py, recipe.py, and ingredient.py.
