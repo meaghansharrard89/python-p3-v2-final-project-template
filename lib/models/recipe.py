@@ -48,11 +48,35 @@ class Recipe:
 
     @property
     def ingredients(self):
-        return self._ingredients
+        query = """
+            SELECT name
+            FROM ingredients
+            JOIN recipe_ingredients ri ON ingredients.id = ri.ingredient_id
+            WHERE ri.recipe_id = ?
+        """
+        CURSOR.execute(query, (self.id,))
+        rows = CURSOR.fetchall()
+        return [row[0] for row in rows]
 
-    @ingredients.setter
-    def ingredients(self, value):
-        self._ingredients = value
+    # @ingredients.setter
+    # def ingredients(self, new_ingredients):
+    #     RecipeIngredient.delete_by_recipe_id(self.id)
+
+    #     saved_ingredient_ids = []
+    #     for ingredient_name in new_ingredients:
+    #         existing_ingredient = Ingredient.find_by_name(ingredient_name)
+
+    #         if existing_ingredient:
+    #             ingredient_id = existing_ingredient.id
+    #         else:
+    #             new_ingredient = Ingredient(ingredient_name)
+    #             new_ingredient.save()
+    #             ingredient_id = new_ingredient.id
+
+    #         saved_ingredient_ids.append(ingredient_id)
+
+    #     for ingredient_id in saved_ingredient_ids:
+    #         RecipeIngredient(self, Ingredient.find_by_id(ingredient_id)).save()
 
     @classmethod
     def create_table(cls):

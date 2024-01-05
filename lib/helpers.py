@@ -228,8 +228,11 @@ def display_all_recipes():
                 f"[magenta]Instructions:[/magenta] [blue]{recipe.instructions}[/blue]"
             )
             console.print(
-                f"[magenta]Category:[/magenta] [purple]{recipe.category.name if recipe.category else 'Uncategorized'}[/purple]"
+                f"[magenta]Category:[/magenta] [blue]{recipe.category.name if recipe.category else 'Uncategorized'}[/blue]"
             )
+            console.print(f"[magenta]Ingredients:[/magenta]")
+            for ingredient in recipe.ingredients:
+                console.print(f"[blue]- {ingredient}[/blue]")
             console.print()
     else:
         console.print()
@@ -247,13 +250,16 @@ def recipe_by_id():
     if recipe:
         console.print("[white]Recipe Details:[/white]")
         console.print()
-        console.print(f"[magenta]Title:[/magenta] [purple]{recipe.title}[/purple]")
+        console.print(f"[magenta]Title:[/magenta] [blue]{recipe.title}[/blue]")
         console.print(
-            f"[magenta]Instructions:[/magenta] [purple]{recipe.instructions}[/purple]"
+            f"[magenta]Instructions:[/magenta] [blue]{recipe.instructions}[/blue]"
         )
         console.print(
-            f"[magenta]Category:[/magenta] [purple]{recipe.category.name if recipe.category else 'Uncategorized'}[/purple]"
+            f"[magenta]Category:[/magenta] [blue]{recipe.category.name if recipe.category else 'Uncategorized'}[/blue]"
         )
+        console.print(f"[magenta]Ingredients:[/magenta]")
+        for ingredient in recipe.ingredients:
+            console.print(f"[blue]- {ingredient}[/blue]")
     else:
         console.print(f"[red]Recipe {id_} not found[/red]")
 
@@ -305,7 +311,6 @@ def update_recipe():
                         recipe, Ingredient.find_by_id(ingredient_id)
                     ).save()
 
-                recipe.ingredients = ingredients_list
                 recipe.update()
 
                 console.print(f"[magenta]Recipe successfully updated![/magenta]")

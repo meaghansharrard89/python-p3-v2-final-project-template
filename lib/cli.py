@@ -51,8 +51,6 @@ def display_logo():
     bottom_line = """
 
 ***********************************************
-    
-     A CLI project by Meaghan Sharrard
 
 ***********************************************
 
