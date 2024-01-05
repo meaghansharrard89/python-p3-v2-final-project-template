@@ -53,7 +53,7 @@ Recipe contains four columns: ID, title, instructions, and category_id. A recipe
 
 <h3>recipe_ingredients.py</h3>
 
-RecipeIngredient contains three columns: id, recipe_id, and ingredient_id. All new recipes created will have the ingredient's ID stored in this table along with the associated recipe ID, while the name of the ingredient will be stored in the ingredients table.
+RecipeIngredient contains three columns: ID, recipe_id, and ingredient_id. All new recipes created will have the ingredient's ID stored in this table along with the associated recipe ID, while the name of the ingredient will be stored in the ingredients table.
 
 <h3>cli.py</h3>
 
@@ -80,8 +80,8 @@ Explore the program through these different menu options:
     <li><b>0- Kitchen's closed:</b> closes the menu and brings users back to the program files.</li>
     <li><b>1- Create a new recipe:</b> enter the title, ingredients, instructions, and category to create a new recipe. The new recipe will add ingredients to the ingredients/recipe_ingredients tables (if they don't already exist).</li>
     <li><b>2- Display all recipes:</b> displays all recipes and associated information.</li>
-    <li><b>3- Find a recipe by ID:</b> returns the recipe title after searching by recipe ID.</li>
-    <li><b>4- Update an existing recipe:</b> update a recipe's title, instructions, ingredients, or category. Any changes made to ingredients will reflect in the recipe_ingredients table.
+    <li><b>3- Find a recipe by ID:</b> returns the recipe details after searching by recipe ID.</li>
+    <li><b>4- Update an existing recipe:</b> update a recipe's title, instructions, ingredients, or category. Any changes made to ingredients will reflect in the recipe_ingredients/ingredients table.
     <li><b>5- Delete a recipe:</b> enter the title of the recipe to delete.</li>
     <li><b>6- Add a new ingredient:</b> add a new ingredient by entering the name of the ingredient.</li>
     <li><b>7- Display all ingredients:</b> displays all ingredients.</li>
