@@ -82,7 +82,7 @@ Explore the program through these different menu options:
     <li><b>2- Display all recipes:</b> displays all recipes and associated information.</li>
     <li><b>3- Find a recipe by ID:</b> returns the recipe details after searching by recipe ID.</li>
     <li><b>4- Update an existing recipe:</b> update a recipe's title, instructions, ingredients, or category. Any changes made to ingredients will reflect in the recipe_ingredients/ingredients table.
-    <li><b>5- Delete a recipe:</b> enter the title of the recipe to delete.</li>
+    <li><b>5- Delete a recipe:</b> enter the title of the recipe to delete. This will delete the instance from recipe, ingredients, and the recipe_ingredient tables.</li>
     <li><b>6- Add a new ingredient:</b> add a new ingredient by entering the name of the ingredient.</li>
     <li><b>7- Display all ingredients:</b> displays all ingredients.</li>
     <li><b>8- Find an ingredient by ID:</b> returns the ingredient name after searching by ingredient ID.</li>
